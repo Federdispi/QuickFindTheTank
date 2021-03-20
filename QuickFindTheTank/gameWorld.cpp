@@ -654,5 +654,13 @@ void GameWorld::setUpTiles()
 	eighteenthRow.push_back(new GameTile("C:/Images/block.png", 1740, 1020, false, false));
 	eighteenthRow.push_back(new GameTile("C:/Images/block.png", 1800, 1020, false, false));
 	eighteenthRow.push_back(new GameTile("C:/Images/block.png", 1860, 1020, false, false));
+
+
+
+
+
+
+
+
 	tiles.push_back(eighteenthRow);
 }
