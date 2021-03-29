@@ -1,3 +1,4 @@
+#pragma one
 #include <SFML/Graphics.hpp>
 #include "gameTile.h"
 #include "gameWorld.h"
@@ -7,6 +8,8 @@
 #include "score.h"
 #include <string>
 #include "TextBox.h"
+#include "Menu_MAP.h"
+#include <SFML/Audio.hpp>
 
 
 int main()
@@ -18,21 +21,52 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "QuickFindTheTank Beta", sf::Style::Fullscreen);
 
 	Menu menu(window.getSize().x, window.getSize().y);
-
+    
 	GameWorld gameWorld = GameWorld();
 
-    sf::Texture bgtex;
-    bgtex.loadFromFile("Ecran menu.png");
+    Menu_MAP Menu_MAP;
 
-    sf::String playerInput;
-    sf::Text playerText;
-    sf::Font arial;
-    arial.loadFromFile("arial.ttf");
-    TextBox textbox1(15, sf::Color::White, false);
-    textbox1.setFont(arial);
+
+#pragma region textbox
+    sf::Font boomtank;
+    boomtank.loadFromFile("boomtankPG.ttf");
+    TextBox textbox1(35, sf::Color::White, false);
+    textbox1.setFont(boomtank);
     textbox1.setPosition({ 100, 100 });
     textbox1.setLimit(true, 50);
+#pragma endregion textbox
 	
+#pragma region Music
+    sf::Music music;
+    if (!music.openFromFile("SOUNDTRACK TANK.ogg"))
+        std::cout << "Erreur de chargement de la musique" << std::endl;
+
+    sf::SoundBuffer buffer;
+    if (!buffer.loadFromFile("Round Start.ogg"))
+        std::cout << "Erreur de chargement de la bande sonore" << std::endl;
+    sf::Sound sound;
+    sound.setBuffer(buffer);
+
+    sf::SoundBuffer buffer2;
+    if (!buffer2.loadFromFile("Round End.ogg"))
+        std::cout << "Erreur de chargement de la bande sonore" << std::endl;
+    sf::Sound sound2;
+    sound2.setBuffer(buffer2);
+
+    sf::SoundBuffer buffer3;
+    if (!buffer3.loadFromFile("Game Over.ogg"))
+        std::cout << "Erreur de chargement de la bande sonore" << std::endl;
+    sf::Sound sound3;
+    sound3.setBuffer(buffer3);
+
+    sf::Music music2;
+    if (!music2.openFromFile("Results.ogg"))
+        std::cout << "Erreur de chargement de la musique" << std::endl;
+#pragma endregion Music
+
+    music.play(); // Play menu music
+    
+
 	while (window.isOpen()) {
 		sf::Event event;
 
@@ -69,9 +103,10 @@ int main()
                     switch (menu.GetPressedItem())
                     {
                     case 0:
-                        if (textbox1.getText() != "") 
+                        if (textbox1.getText() != "") // if a name has been entered
                         {
                         std::cout << "Bouton play enclencher" << std::endl;
+                        sound.play(); // Play the start-of-game soundtrack
                         a = 1;
                         }
                         else
@@ -98,24 +133,21 @@ int main()
             }
 		}
 
-        sf::Sprite bg;
-        bg.setScale(sf::Vector2f(window.getView().getSize().x, window.getView().getSize().y));
-        bg.setOrigin(sf::Vector2f(0, 0));
-        bg.setTexture(bgtex, true);
-
 		window.clear();
 
-        window.draw(bg);
         if(a==1)  
         {
+            music.stop();
             play(gameWorld, window);
         }
         else if (a == 2) 
         {
+            music.stop();
             score();
         }
         else 
         {
+            Menu_MAP.drawBackground(window);
             menu.draw(window);
             textbox1.drawTo(window);
         }

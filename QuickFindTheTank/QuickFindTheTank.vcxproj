@@ -97,7 +97,7 @@
 ;sfml-system-d.lib;
 sfml-window-d.lib
 ;sfml-graphics-d.lib;
-sfml-main-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+sfml-main-d.lib;sfml-audio-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -156,11 +156,13 @@ sfml-main.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClCompile Include="gameTile.cpp" />
     <ClCompile Include="gameWorld.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Menu_MAP.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\QuickFind Char\Menu.h" />
     <ClInclude Include="gameTile.h" />
     <ClInclude Include="gameWorld.h" />
+    <ClInclude Include="Menu_MAP.h" />
     <ClInclude Include="play.h" />
     <ClInclude Include="score.h" />
     <ClInclude Include="TextBox.h" />
