@@ -121,7 +121,10 @@ private:
 				deleteLastChar();
 			}
 		}
-		textbox.setString(text.str() + "_");
+		if (text.str().length() == 0)
+			textbox.setString(text.str() + "Veuillez entrer un nom");
+		else
+			textbox.setString(text.str() + "_");
 	}
 
 	void deleteLastChar()

@@ -38,9 +38,6 @@
     <ClInclude Include="gameWorld.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\QuickFind Char\Menu.h">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
     <ClInclude Include="play.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
@@ -51,6 +48,9 @@
       <Filter>File di intestazione</Filter>
     </ClInclude>
     <ClInclude Include="Menu_MAP.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
   </ItemGroup>

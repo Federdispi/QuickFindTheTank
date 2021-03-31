@@ -17,6 +17,7 @@ int main()
 	int a = 0;
 	float windowHeight = 1080;
 	float windowWidth = 1920;
+    std::string name;
 
 	sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "QuickFindTheTank Beta", sf::Style::Fullscreen);
 
@@ -105,6 +106,7 @@ int main()
                     case 0:
                         if (textbox1.getText() != "") // if a name has been entered
                         {
+                        name = textbox1.getText();
                         std::cout << "Bouton play enclencher" << std::endl;
                         sound.play(); // Play the start-of-game soundtrack
                         a = 1;
