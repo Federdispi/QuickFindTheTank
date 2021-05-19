@@ -159,9 +159,9 @@ sfml-main.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClCompile Include="Menu_MAP.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\QuickFind Char\Menu.h" />
     <ClInclude Include="gameTile.h" />
     <ClInclude Include="gameWorld.h" />
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="Menu_MAP.h" />
     <ClInclude Include="play.h" />
     <ClInclude Include="score.h" />
