@@ -1,13 +1,23 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include <iostream>
 #include <vector>
 
+#define MAX_NUMBER_OF_ITEMS 1 //Number of items
 
-void score()
+class Score
 {
-	std::vector<int> TAB1;
-	std::vector<int> TAB2;
+public:
+	Score(float width, float height);
+	~Score();
+
+	void draw(sf::RenderWindow& window);
+	int GetPressedItem() { return selectedItemIndex; }
 
 
-}
+private:
+	int selectedItemIndex;
+	sf::Font font;
+	sf::Text score[MAX_NUMBER_OF_ITEMS];
+
+};
+

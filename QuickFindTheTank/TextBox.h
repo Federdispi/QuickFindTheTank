@@ -13,6 +13,10 @@ public:
 	{
 
 	}
+	~TextBox()
+	{
+
+	}
 
 	TextBox (int size, sf::Color color, bool sel)
 	{
