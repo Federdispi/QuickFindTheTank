@@ -10,6 +10,8 @@
 #include "TextBox.h"
 #include "Menu_MAP.h"
 #include <SFML/Audio.hpp>
+#include "tank.h"
+#include <vector>
 
 
 int main()
@@ -26,6 +28,8 @@ int main()
 	GameWorld gameWorld = GameWorld();
 
     Menu_MAP Menu_MAP;
+
+    tank tank_1 = tank(500, 500, 3);
 
 
 #pragma region textbox
@@ -141,6 +145,26 @@ int main()
         {
             music.stop();
             play(gameWorld, window);
+            tank_1.turret(sf::Mouse::getPosition(window));
+            window.draw(tank_1.get_sprite_tank());
+            window.draw(tank_1.get_sprite_turret());
+
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
+            {
+                tank_1.move_u();
+            }
+            else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+            {
+                tank_1.move_d();
+            }
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+            {
+                tank_1.move_r();
+            }
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+            {
+                tank_1.move_l();
+            }
         }
         else if (a == 2) 
         {
