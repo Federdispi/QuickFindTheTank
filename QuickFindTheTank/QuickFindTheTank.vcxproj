@@ -157,6 +157,7 @@ sfml-main.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Menu_MAP.cpp" />
+    <ClCompile Include="score.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gameTile.h" />
@@ -164,6 +165,7 @@ sfml-main.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Menu_MAP.h" />
     <ClInclude Include="play.h" />
+    <ClInclude Include="classement.h" />
     <ClInclude Include="score.h" />
     <ClInclude Include="TextBox.h" />
   </ItemGroup>

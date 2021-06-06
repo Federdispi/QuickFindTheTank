@@ -30,6 +30,9 @@
     <ClCompile Include="Menu.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
+    <ClCompile Include="score.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gameTile.h">
@@ -41,9 +44,6 @@
     <ClInclude Include="play.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
-    <ClInclude Include="score.h">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
     <ClInclude Include="TextBox.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
@@ -51,6 +51,12 @@
       <Filter>File di intestazione</Filter>
     </ClInclude>
     <ClInclude Include="Menu.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="classement.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="score.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
   </ItemGroup>
