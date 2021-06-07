@@ -1,19 +1,25 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <math.h>
 
 class bullet
 {
 private:
-	int x;
-	int y;
+	float x;
+	float y;
+	float speedx;
+	float speedy;
 	int speed;
+	int angle;
 	sf::Texture bullet_texture;
 	sf::Sprite bullet_sprite;
 public:
-	bullet(int _x, int _y, int _speed);
+	bullet(float _x, float _y, int _speed, sf::Vector2i souris);
+	~bullet();
 	int get_x();
 	int get_y();
-	void moove(int x, int y, int angle, sf::Vector2i souris);
+	sf::Sprite get_sprite();
+	void moove();
 };
 

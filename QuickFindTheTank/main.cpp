@@ -11,6 +11,8 @@
 #include "Menu_MAP.h"
 #include <SFML/Audio.hpp>
 #include "score.h"
+#include "tank.h"
+#include "bullet.h"
 
 
 
@@ -29,6 +31,10 @@ int main()
         GameWorld gameWorld = GameWorld(); //Map
 
         Menu_MAP Menu_MAP; //Menu map
+
+        tank tank_1 = tank(500, 500, 2);
+
+        std::vector<bullet*> tablo_bullet;
         
         //Textbox for name
 #pragma region textbox
@@ -204,7 +210,42 @@ int main()
                 {
                     textbox1.setSelected(true);
                 }
+                tank_1.turret(sf::Mouse::getPosition(window));
+                window.draw(tank_1.get_sprite_tank());
+                window.draw(tank_1.get_sprite_turret());
 
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
+                {
+                    tank_1.move_u();
+                }
+                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+                {
+                    tank_1.move_d();
+                }
+                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+                {
+                    tank_1.move_r();
+                }
+                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+                {
+                    tank_1.move_l();
+                }
+                if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+                {
+                    std::cout << "bouton souris" << std::endl;
+                    tablo_bullet.push_back(new bullet(tank_1.get_x(), tank_1.get_y(), 2, sf::Mouse::getPosition(window))); //tablo_bullet.pop_back
+                    std::cout << tablo_bullet.size() << std::endl;
+                }
+                for (int z = 0; z < tablo_bullet.size(); z++)
+                {
+                    tablo_bullet[z]->moove();
+                    window.draw(tablo_bullet[z]->get_sprite());
+                    if (tablo_bullet[z]->get_x() > 1920 || tablo_bullet[z]->get_y() > 1080 || tablo_bullet[z]->get_x() < 0 || tablo_bullet[z]->get_y() < 0)
+                    {
+                        tablo_bullet.erase(tablo_bullet.begin() + z);
+                        //delete tablo_bullet[z];
+                    }
+                }
             }
             else if (a == 2) //If we want go to Score
             {
@@ -239,3 +280,4 @@ int main()
 
     return 0;
 }
+

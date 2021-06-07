@@ -1,15 +1,23 @@
 #include "bullet.h"
 
-bullet::bullet(int _x, int _y, int _speed)
+bullet::bullet(float _x, float _y, int _speed, sf::Vector2i souris)
 	:x(_x),y(_y),speed(_speed)
 {
 	if (!bullet_texture.loadFromFile("bullet_bill.png"))
 	{
 		std::cout << "l'image bullet_bill.png n'a pas pu etre chargee" << std::endl;
 	}
+	angle = atan2((souris.y - y), (souris.x - x)) * 180 / 3.141592654;
+	speedx = cos(angle * 3.141592654 / 180) * speed;
+	speedy = sin(angle * 3.141592654 / 180) * speed;
 	bullet_sprite.setTexture(bullet_texture);
 	bullet_sprite.setOrigin(8, 5);
 	bullet_sprite.setPosition(x, y);
+	bullet_sprite.setRotation(angle);
+}
+
+bullet::~bullet()
+{
 }
 
 int bullet::get_x()
@@ -22,11 +30,14 @@ int bullet::get_y()
 	return y;
 }
 
-void bullet::moove(int _x, int _y, int _angle, sf::Vector2i souris)
+sf::Sprite bullet::get_sprite()
 {
-	int a = (souris.y - _y / souris.x - _x); //coefficient directeur de la droite
-	x += speed;
-	y = a * x;
-	bullet_sprite.setRotation(_angle);
+	return bullet_sprite;
+}
+
+void bullet::moove()
+{
+	x += speedx;
+	y += speedy;
 	bullet_sprite.setPosition(x, y);
 }
