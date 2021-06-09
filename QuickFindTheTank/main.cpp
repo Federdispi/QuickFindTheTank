@@ -76,6 +76,12 @@ int main()
             sf::Music music3;
             if (!music3.openFromFile("Menu TANK.ogg"))
                 std::cout << "Erreur de chargement de la musique" << std::endl;
+
+            sf::SoundBuffer buffer4;
+            if (!buffer4.loadFromFile("shoot.ogg"))
+                std::cout << "Erreur de chargement de la bande sonore" << std::endl;
+            sf::Sound sound4;
+            sound4.setBuffer(buffer4);
 #pragma endregion Music
         
         music3.play(); // Play menu music
@@ -233,7 +239,8 @@ int main()
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
                 {
                     std::cout << "bouton souris" << std::endl;
-                    tablo_bullet.push_back(new bullet(tank_1.get_x(), tank_1.get_y(), 2, sf::Mouse::getPosition(window))); //tablo_bullet.pop_back
+                    tablo_bullet.push_back(new bullet(tank_1.get_x(), tank_1.get_y(), 3, sf::Mouse::getPosition(window))); //tablo_bullet.pop_back
+                    sound4.play(); // Play the shoot sound
                     std::cout << tablo_bullet.size() << std::endl;
                 }
                 for (int z = 0; z < tablo_bullet.size(); z++)
@@ -242,8 +249,8 @@ int main()
                     window.draw(tablo_bullet[z]->get_sprite());
                     if (tablo_bullet[z]->get_x() > 1920 || tablo_bullet[z]->get_y() > 1080 || tablo_bullet[z]->get_x() < 0 || tablo_bullet[z]->get_y() < 0)
                     {
+                        tablo_bullet[z]->~bullet();
                         tablo_bullet.erase(tablo_bullet.begin() + z);
-                        //delete tablo_bullet[z];
                     }
                 }
             }
