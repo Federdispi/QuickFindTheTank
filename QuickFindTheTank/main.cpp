@@ -1,5 +1,7 @@
 #pragma one
 #include <SFML/Graphics.hpp>
+#include <cstdlib>
+#include <ctime>
 #include "gameTile.h"
 #include "gameWorld.h"
 #include "Menu.h"
@@ -13,15 +15,18 @@
 #include "score.h"
 #include "tank.h"
 #include "bullet.h"
-
+#include "tank_enemy.h"
+#include <time.h>
 
 
 
 int main()
 {
+    srand((unsigned int)time(0)); //rand()%6+1 pour un nombre aleatoire entre 1 et 6
 	int a = 0, b = 0,c = 0, d = 0;
 	float windowHeight = 1080;
 	float windowWidth = 1920;
+    int direction = rand() % 4 + 1;
     std::string name;
     do {
         sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "QuickFindTheTank Beta", sf::Style::Fullscreen);
@@ -34,7 +39,14 @@ int main()
 
         tank tank_1 = tank(500, 500, 2);
 
+        tank_enemy tankE_1 = tank_enemy(1000, 500, 2);
+
+        sf::Clock clock;
+        sf::Clock clock2;
+
         std::vector<bullet*> tablo_bullet;
+
+        std::vector<bullet*> tablo_bulletE;
         
         //Textbox for name
 #pragma region textbox
@@ -207,18 +219,68 @@ int main()
       
 
             window.clear();
+            sf::Time elapsed = clock.getElapsedTime();
+            if (elapsed.asSeconds() > 2)
+            {
+                tablo_bulletE.push_back(new bullet(tankE_1.get_x(), tankE_1.get_y(), 3, sf::Vector2i(tank_1.get_x(), tank_1.get_y()))); //tablo_bullet.pop_back sf::Vector2i(tank_1.get_x(), tank_1.get_y())
+                clock.restart();
+                direction = rand() % 4 + 1;
+            }
 
             if (a == 1) //If we want to play 
             {
                 music3.stop(); //Stop the music of Menu
                 play(gameWorld, window); //Game map
+                sf::Time elapsed2 = clock2.getElapsedTime();
+                for (int z = 0; z < tablo_bullet.size(); z++)
+                {
+                    tablo_bullet[z]->moove();
+                    window.draw(tablo_bullet[z]->get_sprite());
+                    if (tablo_bullet[z]->get_x() > 1920 || tablo_bullet[z]->get_y() > 1080 || tablo_bullet[z]->get_x() < 0 || tablo_bullet[z]->get_y() < 0)
+                    {
+                        tablo_bullet[z]->~bullet();
+                        tablo_bullet.erase(tablo_bullet.begin() + z);
+                    }
+                }
+                for (int z = 0; z < tablo_bulletE.size(); z++)
+                {
+                    tablo_bulletE[z]->moove();
+                    window.draw(tablo_bulletE[z]->get_sprite());
+                    if (tablo_bulletE[z]->get_x() > 1920 || tablo_bulletE[z]->get_y() > 1080 || tablo_bulletE[z]->get_x() < 0 || tablo_bulletE[z]->get_y() < 0)
+                    {
+                        tablo_bulletE[z]->~bullet();
+                        tablo_bulletE.erase(tablo_bulletE.begin() + z);
+                    }
+                }
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
                 {
                     textbox1.setSelected(true);
                 }
                 tank_1.turret(sf::Mouse::getPosition(window));
+                tankE_1.turret(tank_1.get_x(), tank_1.get_y());
                 window.draw(tank_1.get_sprite_tank());
                 window.draw(tank_1.get_sprite_turret());
+                window.draw(tankE_1.get_sprite_tank());
+                window.draw(tankE_1.get_sprite_turret());
+                switch (direction)
+                {
+                case 1:
+                    if (tankE_1.get_y() > 60)
+                        tankE_1.move_u();
+                    break;
+                case 2:
+                    if (tankE_1.get_y() < 1020)
+                        tankE_1.move_d();
+                    break;
+                case 3:
+                    if (tankE_1.get_x() > 60)
+                        tankE_1.move_l();
+                    break;
+                case 4:
+                    if (tankE_1.get_x() < 1860)
+                        tankE_1.move_r();
+                    break;
+                }
 
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
                 {
@@ -238,19 +300,11 @@ int main()
                 }
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
                 {
-                    std::cout << "bouton souris" << std::endl;
-                    tablo_bullet.push_back(new bullet(tank_1.get_x(), tank_1.get_y(), 3, sf::Mouse::getPosition(window))); //tablo_bullet.pop_back
-                    sound4.play(); // Play the shoot sound
-                    std::cout << tablo_bullet.size() << std::endl;
-                }
-                for (int z = 0; z < tablo_bullet.size(); z++)
-                {
-                    tablo_bullet[z]->moove();
-                    window.draw(tablo_bullet[z]->get_sprite());
-                    if (tablo_bullet[z]->get_x() > 1920 || tablo_bullet[z]->get_y() > 1080 || tablo_bullet[z]->get_x() < 0 || tablo_bullet[z]->get_y() < 0)
+                    if (elapsed2.asSeconds() > 2)
                     {
-                        tablo_bullet[z]->~bullet();
-                        tablo_bullet.erase(tablo_bullet.begin() + z);
+                        tablo_bullet.push_back(new bullet(tank_1.get_x(), tank_1.get_y(), 3, sf::Mouse::getPosition(window))); //tablo_bullet.pop_back
+                        sound4.play(); // Play the shoot sound
+                        clock2.restart();
                     }
                 }
             }

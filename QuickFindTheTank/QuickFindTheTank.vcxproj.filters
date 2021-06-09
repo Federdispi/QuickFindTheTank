@@ -39,6 +39,9 @@
     <ClCompile Include="bullet.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
+    <ClCompile Include="tank_enemy.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gameTile.h">
@@ -69,6 +72,9 @@
       <Filter>File di intestazione</Filter>
     </ClInclude>
     <ClInclude Include="bullet.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="tank_enemy.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
   </ItemGroup>
