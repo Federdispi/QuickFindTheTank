@@ -1,6 +1,6 @@
 #include "bullet.h"
 
-bullet::bullet(float _x, float _y, int _speed, sf::Vector2i souris)
+bullet::bullet(float _x, float _y, float _speed, sf::Vector2i souris)
 	:x(_x),y(_y),speed(_speed)
 {
 	if (!bullet_texture.loadFromFile("bullet_bill.png"))
@@ -35,9 +35,9 @@ sf::Sprite bullet::get_sprite()
 	return bullet_sprite;
 }
 
-void bullet::moove()
+void bullet::moove(float time)
 {
-	x += speedx;
-	y += speedy;
+	x = x + (speedx * time);
+	y = y + (speedy * time);
 	bullet_sprite.setPosition(x, y);
 }
