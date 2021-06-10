@@ -87,12 +87,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\SFML-2.5.1\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\lucas\Documents\ESIREM\Projet programmation\Projet\SFML-2.5.1\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\SFML-2.5.1\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\lucas\Documents\ESIREM\Projet programmation\Projet\SFML-2.5.1\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;sfml-system-d.lib;sfml-window-d.lib;sfml-graphics-d.lib;sfml-main-d.lib;sfml-audio-d.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -157,6 +157,7 @@ sfml-main.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Menu_MAP.cpp" />
+    <ClCompile Include="pause.cpp" />
     <ClCompile Include="score.cpp" />
     <ClCompile Include="tank.cpp" />
     <ClCompile Include="tank_enemy.cpp" />
@@ -167,6 +168,7 @@ sfml-main.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClInclude Include="gameWorld.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Menu_MAP.h" />
+    <ClInclude Include="pause.h" />
     <ClInclude Include="play.h" />
     <ClInclude Include="classement.h" />
     <ClInclude Include="score.h" />

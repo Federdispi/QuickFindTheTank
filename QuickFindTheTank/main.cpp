@@ -17,6 +17,7 @@
 #include "bullet.h"
 #include "tank_enemy.h"
 #include <time.h>
+#include "pause.h"
 
 
 
@@ -120,9 +121,11 @@ int main()
                     c = 0;
                     d = 0;
                     music3.play(); // Play menu music after a game
+                    music2.stop(); // Stop the score music 
+                    tablo_bullet.clear();
+                    tablo_bulletE.clear();
                 }
                 
-                music2.stop();
 
 
                 if (event.type == sf::Event::Closed)
@@ -196,14 +199,21 @@ int main()
                                     std::cout << "retour au menu" << std::endl;
                                     a = 3; //Return to the start of the program (Menu)
                             }
+                            else if (a == 4) //If we came from Pause
+                            {
+                                std::cout << "Retour a la partie" << std::endl;
+                                music.play(); //Play game music
+                                a = 1;
+                            }
                             break;
 
                             
                         case sf::Keyboard::E:
                             if (a == 1) 
                                 {
-                                std::cout << "Fin de la partie" << std::endl;
-                                a = 2; //Go to Score
+                                std::cout << "Pause" << std::endl;
+                                //std::cout << "Fin de la partie" << std::endl;
+                                a = 4; //Go to Score
                                 d = 2; //The key up and down haven't effect
                                 }
                             break;
@@ -305,7 +315,7 @@ int main()
                         tablo_bullet.push_back(new bullet(tank_1.get_x(), tank_1.get_y(), 3, sf::Mouse::getPosition(window))); //tablo_bullet.pop_back
                         sound4.play(); // Play the shoot sound
                         clock2.restart();
-                    }
+                    } 
                 }
             }
             else if (a == 2) //If we want go to Score
@@ -320,6 +330,13 @@ int main()
                 Score score(window.getSize().x, window.getSize().y); //Score
                 Menu_MAP.drawBackground(window); //Score map = Menu map
                 score.draw(window);
+            }
+            else if (a == 4) //If we want go to Score
+            {
+                music.stop(); //Stop the music of Game
+                Pause Pause(window.getSize().x, window.getSize().y); //Score
+                Menu_MAP.drawBackground(window); //Score map = Menu map
+                Pause.draw(window);
             }
             
             else //Menu Drawing
