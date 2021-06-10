@@ -1,6 +1,6 @@
 #include "tank.h"
 
-tank::tank(int _x, int _y, int _speed)
+tank::tank(int _x, int _y, float _speed)
 	:x(_x),y(_y),speed(_speed)
 {
 	if (!tank_texture.loadFromFile("tank.png"))
@@ -19,31 +19,31 @@ tank::tank(int _x, int _y, int _speed)
 	tank_sprite.setOrigin(31, 45); //on définie le centre de l'image du tank
 }
 
-void tank::move_u()
+void tank::move_u(float time)
 {
 	tank_sprite.setRotation(0);
-	y -= speed;
+	y = y - (speed * time);
 	tank_sprite.setPosition(x, y);
 }
 
-void tank::move_d()
+void tank::move_d(float time)
 {
 	tank_sprite.setRotation(180); //on tourne le tank
-	y += speed;
+	y = y + (speed * time);
 	tank_sprite.setPosition(x, y);
 }
 
-void tank::move_l()
+void tank::move_l(float time)
 {
 	tank_sprite.setRotation(270); //on tourne le tank
-	x -= speed;
+	x = x - (speed * time);
 	tank_sprite.setPosition(x, y);
 }
 
-void tank::move_r()
+void tank::move_r(float time)
 {
 	tank_sprite.setRotation(90); //on tourne le tank
-	x += speed;
+	x = x + (speed * time);
 	tank_sprite.setPosition(x, y);
 }
 
@@ -65,6 +65,11 @@ int tank::get_x()
 int tank::get_y()
 {
 	return y;
+}
+
+float tank::get_speed()
+{
+	return speed;
 }
 
 void tank::turret(sf::Vector2i souris) //pour actualiser la position de la tourelle
