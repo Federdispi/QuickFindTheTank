@@ -1,6 +1,6 @@
 #include "tank_enemy.h"
 
-tank_enemy::tank_enemy(int _x, int _y, int _speed)
+tank_enemy::tank_enemy(int _x, int _y, float _speed)
 	:x(_x), y(_y), speed(_speed)
 {
 	if (!tank_texture.loadFromFile("tank.png"))
@@ -19,31 +19,31 @@ tank_enemy::tank_enemy(int _x, int _y, int _speed)
 	tank_sprite.setOrigin(31, 45); //on définie le centre de l'image du tank
 }
 
-void tank_enemy::move_u()
+void tank_enemy::move_u(float time)
 {
 	tank_sprite.setRotation(0);
-	y -= speed;
+	y = y - (speed * time);
 	tank_sprite.setPosition(x, y);
 }
 
-void tank_enemy::move_d()
+void tank_enemy::move_d(float time)
 {
 	tank_sprite.setRotation(180); //on tourne le tank
-	y += speed;
+	y = y + (speed * time);
 	tank_sprite.setPosition(x, y);
 }
 
-void tank_enemy::move_l()
+void tank_enemy::move_l(float time)
 {
 	tank_sprite.setRotation(270); //on tourne le tank
-	x -= speed;
+	x = x + (speed * time);
 	tank_sprite.setPosition(x, y);
 }
 
-void tank_enemy::move_r()
+void tank_enemy::move_r(float time)
 {
 	tank_sprite.setRotation(90); //on tourne le tank
-	x += speed;
+	x = x + (speed * time);
 	tank_sprite.setPosition(x, y);
 }
 
@@ -65,6 +65,25 @@ int tank_enemy::get_x()
 int tank_enemy::get_y()
 {
 	return y;
+}
+
+float tank_enemy::get_speed()
+{
+	return speed;
+}
+
+void tank_enemy::set_x(int _x)
+{
+	x = _x;
+	tank_sprite.setPosition(x, y);
+	turret_sprite.setPosition(x, y);
+}
+
+void tank_enemy::set_y(int _y)
+{
+	y = _y;
+	tank_sprite.setPosition(x, y);
+	turret_sprite.setPosition(x, y);
 }
 
 void tank_enemy::turret(int _x,int _y)//pour actualiser la position de la tourelle
