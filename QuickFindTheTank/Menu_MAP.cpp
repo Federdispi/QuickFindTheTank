@@ -1,9 +1,9 @@
 #include "Menu_MAP.h"
 
 
-Menu_MAP::Menu_MAP()
+Menu_MAP::Menu_MAP() //Load background of Menu
 {
-	if (!backgroundTexture.loadFromFile("Ecran menu.png"))
+	if (!backgroundTexture.loadFromFile("background Menu.png"))
 	{
 		std::cout << "Erreur de chargement du fond d'ecran du menu" << std::endl;
 	}
@@ -12,7 +12,7 @@ Menu_MAP::Menu_MAP()
 }
 
 
-void Menu_MAP::drawBackground(sf::RenderWindow& window)
+void Menu_MAP::drawBackground(sf::RenderWindow& window) //Draw background
 {
 	window.draw(background);
 }

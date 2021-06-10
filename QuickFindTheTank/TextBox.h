@@ -33,17 +33,17 @@ public:
 		}
 	}
 
-	void setFont(sf::Font& font)
+	void setFont(sf::Font& font) //Font
 	{
 		textbox.setFont(font);
 	}
 
-	void setPosition(sf::Vector2f pos)
+	void setPosition(sf::Vector2f pos) //Position
 	{
 		textbox.setPosition(pos);
 	}
-
-	void setLimit(bool ToF)
+	//Characters limit
+	void setLimit(bool ToF) 
 	{
 		hasLimit = ToF;
 	}
@@ -74,12 +74,12 @@ public:
 		return text.str();
 	}
 
-	void drawTo(sf::RenderWindow& window)
+	void drawTo(sf::RenderWindow& window) //Draw the textbox
 	{
 		window.draw(textbox);
 	}
 
-	void typedOn(sf::Event input)
+	void typedOn(sf::Event input) //Typed on textbox
 	{
 		if (isSelected)
 		{
@@ -131,7 +131,7 @@ private:
 			textbox.setString(text.str() + "_");
 	}
 
-	void deleteLastChar()
+	void deleteLastChar() //Delete
 	{
 		std::string t = text.str();
 		std::string newT = "";

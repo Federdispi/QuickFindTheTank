@@ -35,9 +35,9 @@ sf::Sprite bullet::get_sprite()
 	return bullet_sprite;
 }
 
-void bullet::moove(float time)
+void bullet::moove()
 {
-	x = x + (speedx * time);
-	y = y + (speedy * time);
+	x = x + (speedx);
+	y = y + (speedy);
 	bullet_sprite.setPosition(x, y);
 }

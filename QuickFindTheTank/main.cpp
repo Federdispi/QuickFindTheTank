@@ -34,13 +34,15 @@ int main()
 
         Menu menu(window.getSize().x, window.getSize().y); //Menu
 
+        window.setFramerateLimit(60);
+
         GameWorld gameWorld = GameWorld(); //Map
 
         Menu_MAP Menu_MAP; //Menu map
 
-        tank tank_1 = tank(500, 500, 0.3);
+        tank tank_1 = tank(500, 500, 5);
 
-        tank_enemy tankE_1 = tank_enemy(1000, 500, 0.3);
+        tank_enemy tankE_1 = tank_enemy(1000, 500, 5);
 
         sf::Clock clock;
         sf::Clock clock2;
@@ -240,7 +242,7 @@ int main()
             main.restart();
             if (elapsed.asSeconds() > 2)
             {
-                tablo_bulletE.push_back(new bullet(tankE_1.get_x(), tankE_1.get_y(), 0.5, sf::Vector2i(tank_1.get_x(), tank_1.get_y()))); //tablo_bullet.pop_back sf::Vector2i(tank_1.get_x(), tank_1.get_y())
+                tablo_bulletE.push_back(new bullet(tankE_1.get_x(), tankE_1.get_y(), 4, sf::Vector2i(tank_1.get_x(), tank_1.get_y()))); //tablo_bullet.pop_back sf::Vector2i(tank_1.get_x(), tank_1.get_y())
                 clock.restart();
                 direction = rand() % 4 + 1;
             }
@@ -252,7 +254,7 @@ int main()
                 sf::Time elapsed2 = clock2.getElapsedTime();
                 for (int z = 0; z < tablo_bullet.size(); z++)
                 {
-                    tablo_bullet[z]->moove(time.asMilliseconds());
+                    tablo_bullet[z]->moove();
                     window.draw(tablo_bullet[z]->get_sprite());
                     if (tablo_bullet[z]->get_x() > 1920 || tablo_bullet[z]->get_y() > 1080 || tablo_bullet[z]->get_x() < 0 || tablo_bullet[z]->get_y() < 0)
                     {
@@ -262,7 +264,7 @@ int main()
                 }
                 for (int z = 0; z < tablo_bulletE.size(); z++)
                 {
-                    tablo_bulletE[z]->moove(time.asMilliseconds());
+                    tablo_bulletE[z]->moove();
                     window.draw(tablo_bulletE[z]->get_sprite());
                     if (tablo_bulletE[z]->get_x() > 1920 || tablo_bulletE[z]->get_y() > 1080 || tablo_bulletE[z]->get_x() < 0 || tablo_bulletE[z]->get_y() < 0)
                     {
@@ -284,43 +286,43 @@ int main()
                 {
                 case 1:
                     if (tankE_1.get_y() > 80)
-                        tankE_1.move_u(time.asMilliseconds());
+                        tankE_1.move_u();
                     break;
                 case 2:
                     if (tankE_1.get_y() < 1000)
-                        tankE_1.move_d(time.asMilliseconds());
+                        tankE_1.move_d();
                     break;
                 case 3:
                     if (tankE_1.get_x() > 80)
-                        tankE_1.move_l(time.asMilliseconds());
+                        tankE_1.move_l();
                     break;
                 case 4:
                     if (tankE_1.get_x() < 1840)
-                        tankE_1.move_r(time.asMilliseconds());
+                        tankE_1.move_r();
                     break;
                 }
 
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
                 {
-                    tank_1.move_u(time.asMilliseconds());
+                    tank_1.move_u();
                 }
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
                 {
-                    tank_1.move_d(time.asMilliseconds());
+                    tank_1.move_d();
                 }
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
                 {
-                    tank_1.move_r(time.asMilliseconds());
+                    tank_1.move_r();
                 }
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
                 {
-                    tank_1.move_l(time.asMilliseconds());
+                    tank_1.move_l();
                 }
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
                 {
                     if (elapsed2.asSeconds() > 2)
                     {
-                        tablo_bullet.push_back(new bullet(tank_1.get_x(), tank_1.get_y(), 0.5, sf::Mouse::getPosition(window))); //tablo_bullet.pop_back
+                        tablo_bullet.push_back(new bullet(tank_1.get_x(), tank_1.get_y(), 4, sf::Mouse::getPosition(window))); //tablo_bullet.pop_back
                         sound4.play(); // Play the shoot sound
                         clock2.restart();
                     } 

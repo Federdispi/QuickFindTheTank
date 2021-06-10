@@ -20,6 +20,6 @@ public:
 	int get_x();
 	int get_y();
 	sf::Sprite get_sprite();
-	void moove(float time);
+	void moove();
 };
 
