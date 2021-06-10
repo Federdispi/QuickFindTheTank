@@ -24,6 +24,7 @@ int main()
 {
     srand((unsigned int)time(0)); //rand()%6+1 pour un nombre aleatoire entre 1 et 6
 	int a = 0, b = 0,c = 0, d = 0;
+    float time = 0;
 	float windowHeight = 1080;
 	float windowWidth = 1920;
     int direction = rand() % 4 + 1;
@@ -43,6 +44,7 @@ int main()
 
         sf::Clock clock;
         sf::Clock clock2;
+        sf::Clock main;
 
         std::vector<bullet*> tablo_bullet;
 
@@ -201,11 +203,11 @@ int main()
                             
                         case sf::Keyboard::E:
                             if (a == 1) 
-                                {
+                            {
                                 std::cout << "Fin de la partie" << std::endl;
                                 a = 2; //Go to Score
                                 d = 2; //The key up and down haven't effect
-                                }
+                            }
                             break;
 
                         }
@@ -220,6 +222,9 @@ int main()
 
             window.clear();
             sf::Time elapsed = clock.getElapsedTime();
+            sf::Time temps = main.getElapsedTime();
+            time = temps.asMicroseconds();
+            main.restart();
             if (elapsed.asSeconds() > 2)
             {
                 tablo_bulletE.push_back(new bullet(tankE_1.get_x(), tankE_1.get_y(), 3, sf::Vector2i(tank_1.get_x(), tank_1.get_y()))); //tablo_bullet.pop_back sf::Vector2i(tank_1.get_x(), tank_1.get_y())
@@ -236,6 +241,11 @@ int main()
                 {
                     tablo_bullet[z]->moove();
                     window.draw(tablo_bullet[z]->get_sprite());
+                    if (tablo_bullet[z]->get_sprite().getGlobalBounds().intersects(tankE_1.get_sprite_tank().getGlobalBounds()))
+                    {
+                        a = 2;
+                        d = 2;
+                    }
                     if (tablo_bullet[z]->get_x() > 1920 || tablo_bullet[z]->get_y() > 1080 || tablo_bullet[z]->get_x() < 0 || tablo_bullet[z]->get_y() < 0)
                     {
                         tablo_bullet[z]->~bullet();
@@ -246,6 +256,11 @@ int main()
                 {
                     tablo_bulletE[z]->moove();
                     window.draw(tablo_bulletE[z]->get_sprite());
+                    if (tablo_bulletE[z]->get_sprite().getGlobalBounds().intersects(tank_1.get_sprite_tank().getGlobalBounds()))
+                    {
+                        a = 2;
+                        d = 2;
+                    }
                     if (tablo_bulletE[z]->get_x() > 1920 || tablo_bulletE[z]->get_y() > 1080 || tablo_bulletE[z]->get_x() < 0 || tablo_bulletE[z]->get_y() < 0)
                     {
                         tablo_bulletE[z]->~bullet();
@@ -266,37 +281,61 @@ int main()
                 {
                 case 1:
                     if (tankE_1.get_y() > 60)
+                    {
                         tankE_1.move_u();
+                        if (tankE_1.get_sprite_tank().getGlobalBounds().intersects(tank_1.get_sprite_tank().getGlobalBounds()))
+                            tankE_1.move_d();
+                    }
                     break;
                 case 2:
                     if (tankE_1.get_y() < 1020)
+                    {
                         tankE_1.move_d();
+                        if (tankE_1.get_sprite_tank().getGlobalBounds().intersects(tank_1.get_sprite_tank().getGlobalBounds()))
+                            tankE_1.move_u();
+                    }
                     break;
                 case 3:
                     if (tankE_1.get_x() > 60)
+                    {
                         tankE_1.move_l();
+                        if (tankE_1.get_sprite_tank().getGlobalBounds().intersects(tank_1.get_sprite_tank().getGlobalBounds()))
+                            tankE_1.move_r();
+                    }
                     break;
                 case 4:
                     if (tankE_1.get_x() < 1860)
+                    {
                         tankE_1.move_r();
+                        if (tankE_1.get_sprite_tank().getGlobalBounds().intersects(tank_1.get_sprite_tank().getGlobalBounds()))
+                            tankE_1.move_l();
+                    }
                     break;
                 }
 
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)||sf::Keyboard::isKeyPressed(sf::Keyboard::W))
                 {
                     tank_1.move_u();
+                    if(tank_1.get_sprite_tank().getGlobalBounds().intersects(tankE_1.get_sprite_tank().getGlobalBounds()))
+                        tank_1.move_d();
                 }
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
                 {
                     tank_1.move_d();
+                    if (tank_1.get_sprite_tank().getGlobalBounds().intersects(tankE_1.get_sprite_tank().getGlobalBounds()))
+                        tank_1.move_u();
                 }
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
                 {
                     tank_1.move_r();
+                    if (tank_1.get_sprite_tank().getGlobalBounds().intersects(tankE_1.get_sprite_tank().getGlobalBounds()))
+                        tank_1.move_l();
                 }
-                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)||sf::Keyboard::isKeyPressed(sf::Keyboard::A))
                 {
                     tank_1.move_l();
+                    if (tank_1.get_sprite_tank().getGlobalBounds().intersects(tankE_1.get_sprite_tank().getGlobalBounds()))
+                        tank_1.move_r();
                 }
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
                 {
