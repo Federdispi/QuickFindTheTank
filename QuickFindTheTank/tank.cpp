@@ -19,31 +19,31 @@ tank::tank(int _x, int _y, float _speed)
 	tank_sprite.setOrigin(31, 45); //on définie le centre de l'image du tank
 }
 
-void tank::move_u(float time)
+void tank::move_u()
 {
 	tank_sprite.setRotation(0);
-	y = y - (speed * time);
+	y = y - (speed);
 	tank_sprite.setPosition(x, y);
 }
 
-void tank::move_d(float time)
+void tank::move_d()
 {
 	tank_sprite.setRotation(180); //on tourne le tank
-	y = y + (speed * time);
+	y = y + (speed);
 	tank_sprite.setPosition(x, y);
 }
 
-void tank::move_l(float time)
+void tank::move_l()
 {
 	tank_sprite.setRotation(270); //on tourne le tank
-	x = x - (speed * time);
+	x = x - (speed);
 	tank_sprite.setPosition(x, y);
 }
 
-void tank::move_r(float time)
+void tank::move_r()
 {
 	tank_sprite.setRotation(90); //on tourne le tank
-	x = x + (speed * time);
+	x = x + (speed);
 	tank_sprite.setPosition(x, y);
 }
 

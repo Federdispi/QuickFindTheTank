@@ -8,9 +8,8 @@
 
 class GameWorld
 {
-private:
-	void setUpTiles();
 public:
+	void setUpTiles();
 	std::vector<std::vector<GameTile*>> tiles;
 	int gridLength;
 	int gridHeight;
