@@ -38,9 +38,9 @@ int main()
 
         Menu_MAP Menu_MAP; //Menu map
 
-        tank tank_1 = tank(500, 500, 2);
+        tank tank_1 = tank(500, 500, 1);
 
-        tank_enemy tankE_1 = tank_enemy(1000, 500, 2);
+        tank_enemy tankE_1 = tank_enemy(1000, 500, 1);
 
         sf::Clock clock;
         sf::Clock clock2;
@@ -170,7 +170,9 @@ int main()
                                             b = 1;
                                             music.play(); //Play game music
                                         }
-                                   
+                                        clock.restart();
+                                        clock2.restart();
+                                        main.restart();
                                         a = 1; //Play game
                                     }
                                     else
@@ -227,7 +229,7 @@ int main()
             main.restart();
             if (elapsed.asSeconds() > 2)
             {
-                tablo_bulletE.push_back(new bullet(tankE_1.get_x(), tankE_1.get_y(), 3, sf::Vector2i(tank_1.get_x(), tank_1.get_y()))); //tablo_bullet.pop_back sf::Vector2i(tank_1.get_x(), tank_1.get_y())
+                tablo_bulletE.push_back(new bullet(tankE_1.get_x(), tankE_1.get_y(), 1.5, sf::Vector2i(tank_1.get_x(), tank_1.get_y()))); //tablo_bullet.pop_back sf::Vector2i(tank_1.get_x(), tank_1.get_y())
                 clock.restart();
                 direction = rand() % 4 + 1;
             }
@@ -277,71 +279,164 @@ int main()
                 window.draw(tank_1.get_sprite_turret());
                 window.draw(tankE_1.get_sprite_tank());
                 window.draw(tankE_1.get_sprite_turret());
+                if (tankE_1.get_x() == 60 && tankE_1.get_y() == 60)
+                {
+                    tankE_1.move_r();
+                    tankE_1.move_d();
+                }
+                else if (tankE_1.get_x() == 60 && tankE_1.get_y() == 1020)
+                {
+                    tankE_1.move_u();
+                    tankE_1.move_r();
+                }
+                else if (tankE_1.get_x() == 1860 && tankE_1.get_y() == 60)
+                {
+                    tankE_1.move_l();
+                    tankE_1.move_d();
+                }
+                else if (tankE_1.get_x() == 1860 && tankE_1.get_y() == 1020)
+                {
+                    tankE_1.move_l();
+                    tankE_1.move_u();
+                }
                 switch (direction)
                 {
                 case 1:
-                    if (tankE_1.get_y() > 60)
+                    tankE_1.move_u();
+                    for (int i = 0; i < gameWorld.gridHeight; i++)
                     {
-                        tankE_1.move_u();
-                        if (tankE_1.get_sprite_tank().getGlobalBounds().intersects(tank_1.get_sprite_tank().getGlobalBounds()))
-                            tankE_1.move_d();
+                        for (int j = 0; j < gameWorld.gridLength; j++)
+                        {
+                            if (tankE_1.get_sprite_tank().getGlobalBounds().intersects(gameWorld.tiles[i][j]->sprite.getGlobalBounds()) && !gameWorld.tiles[i][j]->isPassable)
+                                tankE_1.move_d();
+                        }
                     }
+                    if (tankE_1.get_sprite_tank().getGlobalBounds().intersects(tank_1.get_sprite_tank().getGlobalBounds()))
+                        tankE_1.move_d();
                     break;
                 case 2:
-                    if (tankE_1.get_y() < 1020)
+                    tankE_1.move_d();
+                    for (int i = 0; i < gameWorld.gridHeight; i++)
                     {
-                        tankE_1.move_d();
-                        if (tankE_1.get_sprite_tank().getGlobalBounds().intersects(tank_1.get_sprite_tank().getGlobalBounds()))
-                            tankE_1.move_u();
+                        for (int j = 0; j < gameWorld.gridLength; j++)
+                        {
+                            if (tankE_1.get_sprite_tank().getGlobalBounds().intersects(gameWorld.tiles[i][j]->sprite.getGlobalBounds()) && !gameWorld.tiles[i][j]->isPassable)
+                                tankE_1.move_u();
+                        }
                     }
+                    if (tankE_1.get_sprite_tank().getGlobalBounds().intersects(tank_1.get_sprite_tank().getGlobalBounds()))
+                        tankE_1.move_u();
                     break;
                 case 3:
-                    if (tankE_1.get_x() > 60)
+                    tankE_1.move_l();
+                    for (int i = 0; i < gameWorld.gridHeight; i++)
                     {
-                        tankE_1.move_l();
-                        if (tankE_1.get_sprite_tank().getGlobalBounds().intersects(tank_1.get_sprite_tank().getGlobalBounds()))
-                            tankE_1.move_r();
+                        for (int j = 0; j < gameWorld.gridLength; j++)
+                        {
+                            if (tankE_1.get_sprite_tank().getGlobalBounds().intersects(gameWorld.tiles[i][j]->sprite.getGlobalBounds()) && !gameWorld.tiles[i][j]->isPassable)
+                                tankE_1.move_r();
+                        }
                     }
+                    if (tankE_1.get_sprite_tank().getGlobalBounds().intersects(tank_1.get_sprite_tank().getGlobalBounds()))
+                        tankE_1.move_r();                    
                     break;
                 case 4:
-                    if (tankE_1.get_x() < 1860)
+                    tankE_1.move_r();
+                    for (int i = 0; i < gameWorld.gridHeight; i++)
                     {
-                        tankE_1.move_r();
-                        if (tankE_1.get_sprite_tank().getGlobalBounds().intersects(tank_1.get_sprite_tank().getGlobalBounds()))
-                            tankE_1.move_l();
+                        for (int j = 0; j < gameWorld.gridLength; j++)
+                        {
+                            if (tankE_1.get_sprite_tank().getGlobalBounds().intersects(gameWorld.tiles[i][j]->sprite.getGlobalBounds()) && !gameWorld.tiles[i][j]->isPassable)
+                                tankE_1.move_l();
+                        }
                     }
+                    if (tankE_1.get_sprite_tank().getGlobalBounds().intersects(tank_1.get_sprite_tank().getGlobalBounds()))
+                        tankE_1.move_l();
                     break;
                 }
 
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)||sf::Keyboard::isKeyPressed(sf::Keyboard::W))
                 {
                     tank_1.move_u();
+                    for (int i = 0; i < gameWorld.gridHeight; i++)
+                    {
+                        for (int j = 0; j < gameWorld.gridLength; j++)
+                        {
+                            if (tank_1.get_sprite_tank().getGlobalBounds().intersects(gameWorld.tiles[i][j]->sprite.getGlobalBounds()) && !gameWorld.tiles[i][j]->isPassable)
+                                tank_1.move_d();
+                        }
+                    }
                     if(tank_1.get_sprite_tank().getGlobalBounds().intersects(tankE_1.get_sprite_tank().getGlobalBounds()))
                         tank_1.move_d();
                 }
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
                 {
                     tank_1.move_d();
+                    for (int i = 0; i < gameWorld.gridHeight; i++)
+                    {
+                        for (int j = 0; j < gameWorld.gridLength; j++)
+                        {
+                            if (tank_1.get_sprite_tank().getGlobalBounds().intersects(gameWorld.tiles[i][j]->sprite.getGlobalBounds()) && !gameWorld.tiles[i][j]->isPassable)
+                                tank_1.move_u();
+                        }
+                    }
                     if (tank_1.get_sprite_tank().getGlobalBounds().intersects(tankE_1.get_sprite_tank().getGlobalBounds()))
                         tank_1.move_u();
                 }
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
                 {
                     tank_1.move_r();
+                    for (int i = 0; i < gameWorld.gridHeight; i++)
+                    {
+                        for (int j = 0; j < gameWorld.gridLength; j++)
+                        {
+                            if (tank_1.get_sprite_tank().getGlobalBounds().intersects(gameWorld.tiles[i][j]->sprite.getGlobalBounds()) && !gameWorld.tiles[i][j]->isPassable)
+                                tank_1.move_l();
+                        }
+                    }
                     if (tank_1.get_sprite_tank().getGlobalBounds().intersects(tankE_1.get_sprite_tank().getGlobalBounds()))
                         tank_1.move_l();
                 }
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)||sf::Keyboard::isKeyPressed(sf::Keyboard::A))
                 {
                     tank_1.move_l();
+                    for (int i = 0; i < gameWorld.gridHeight; i++)
+                    {
+                        for (int j = 0; j < gameWorld.gridLength; j++)
+                        {
+                            if (tank_1.get_sprite_tank().getGlobalBounds().intersects(gameWorld.tiles[i][j]->sprite.getGlobalBounds()) && !gameWorld.tiles[i][j]->isPassable)
+                                tank_1.move_r();
+                        }
+                    }
                     if (tank_1.get_sprite_tank().getGlobalBounds().intersects(tankE_1.get_sprite_tank().getGlobalBounds()))
                         tank_1.move_r();
                 }
+
+                ////upper left corner collision
+                //if (tank_1.get_sprite_tank().getGlobalBounds().contains(sf::Vector2f(75, 75)))
+                //{
+                //    tank_1.move_r();
+                //}
+                ////lower left corner collision
+                //if (tank_1.get_sprite_tank().getGlobalBounds().contains(sf::Vector2f(75, 1005)))
+                //{
+                //    tank_1.move_r();
+                //}
+                ////upper right corner collision
+                //if (tank_1.get_sprite_tank().getGlobalBounds().contains(sf::Vector2f(1845, 75)))
+                //{
+                //    tank_1.move_l();
+                //}
+                ////lower right corner collision
+                //if (tank_1.get_sprite_tank().getGlobalBounds().contains(sf::Vector2f(1845, 1005)))
+                //{
+                //    tank_1.move_l();
+                //}
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
                 {
                     if (elapsed2.asSeconds() > 2)
                     {
-                        tablo_bullet.push_back(new bullet(tank_1.get_x(), tank_1.get_y(), 3, sf::Mouse::getPosition(window))); //tablo_bullet.pop_back
+                        tablo_bullet.push_back(new bullet(tank_1.get_x(), tank_1.get_y(), 1.5, sf::Mouse::getPosition(window))); //tablo_bullet.pop_back
                         sound4.play(); // Play the shoot sound
                         clock2.restart();
                     }
