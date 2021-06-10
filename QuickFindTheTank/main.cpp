@@ -127,6 +127,10 @@ int main()
                     music2.stop(); // Stop the score music 
                     tablo_bullet.clear();
                     tablo_bulletE.clear();
+                    tank_1.set_x(500);
+                    tank_1.set_y(500);
+                    tankE_1.set_x(1000);
+                    tankE_1.set_y(500);
                 }
                 
 
@@ -215,8 +219,7 @@ int main()
                             if (a == 1) 
                                 {
                                 std::cout << "Pause" << std::endl;
-                                //std::cout << "Fin de la partie" << std::endl;
-                                a = 4; //Go to Score
+                                a = 4; //Pause
                                 d = 2; //The key up and down haven't effect
                                 }
                             break;
@@ -336,11 +339,11 @@ int main()
                 Menu_MAP.drawBackground(window); //Score map = Menu map
                 score.draw(window);
             }
-            else if (a == 4) //If we want go to Score
+            else if (a == 4) //If we want go to Pause
             {
                 music.stop(); //Stop the music of Game
-                Pause Pause(window.getSize().x, window.getSize().y); //Score
-                Menu_MAP.drawBackground(window); //Score map = Menu map
+                Pause Pause(window.getSize().x, window.getSize().y); //Pause
+                Menu_MAP.drawBackground(window); //Pause map = Menu map
                 Pause.draw(window);
             }
             
