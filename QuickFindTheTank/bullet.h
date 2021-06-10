@@ -21,5 +21,6 @@ public:
 	int get_y();
 	sf::Sprite get_sprite();
 	void moove();
+	bool touche = false;
 };
 

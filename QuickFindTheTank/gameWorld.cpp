@@ -3,23 +3,7 @@ GameWorld::GameWorld()
 {
 	gridLength = 32;
 	gridHeight = 18;
-	setUpInitialState();
-}
-
-void GameWorld::setUpInitialState()
-{
-	playerPos = sf::Vector2i(gridLength - 1, gridLength - 1);
-	setUpEnemyPositions();
 	setUpTiles();
-}
-
-
-void GameWorld::setUpEnemyPositions()
-{
-	enemyPositions.clear();
-	enemyPositions.push_back(sf::Vector2i(0, 2));
-	enemyPositions.push_back(sf::Vector2i(6, 0));
-	enemyPositions.push_back(sf::Vector2i(2, 7));
 }
 
 void GameWorld::setUpTiles()
@@ -144,12 +128,12 @@ void GameWorld::setUpTiles()
 	fourthRow.push_back(new GameTile("ground.png", 600, 180, true, false));
 	fourthRow.push_back(new GameTile("ground.png", 660, 180, true, false));
 	fourthRow.push_back(new GameTile("ground.png", 720, 180, true, false));
-	fourthRow.push_back(new GameTile("ground.png", 780, 180, true, false));
-	fourthRow.push_back(new GameTile("ground.png", 840, 180, true, false));
-	fourthRow.push_back(new GameTile("ground.png", 900, 180, true, false));
-	fourthRow.push_back(new GameTile("ground.png", 960, 180, true, false));
-	fourthRow.push_back(new GameTile("ground.png", 1020, 180, true, false));
-	fourthRow.push_back(new GameTile("ground.png", 1080, 180, true, false));
+	fourthRow.push_back(new GameTile("wall.png", 780, 180, false, true));
+	fourthRow.push_back(new GameTile("wall.png", 840, 180, false, true));
+	fourthRow.push_back(new GameTile("wall.png", 900, 180, false, true));
+	fourthRow.push_back(new GameTile("wall.png", 960, 180, false, true));
+	fourthRow.push_back(new GameTile("wall.png", 1020, 180, false, true));
+	fourthRow.push_back(new GameTile("wall.png", 1080, 180, false, true));
 	fourthRow.push_back(new GameTile("ground.png", 1140, 180, true, false));
 	fourthRow.push_back(new GameTile("ground.png", 1200, 180, true, false));
 	fourthRow.push_back(new GameTile("ground.png", 1260, 180, true, false));
@@ -181,8 +165,8 @@ void GameWorld::setUpTiles()
 	fifthRow.push_back(new GameTile("ground.png", 720, 240, true, false));
 	fifthRow.push_back(new GameTile("ground.png", 780, 240, true, false));
 	fifthRow.push_back(new GameTile("ground.png", 840, 240, true, false));
-	fifthRow.push_back(new GameTile("ground.png", 900, 240, true, false));
-	fifthRow.push_back(new GameTile("ground.png", 960, 240, true, false));
+	fifthRow.push_back(new GameTile("wall.png", 900, 240, false, true));
+	fifthRow.push_back(new GameTile("wall.png", 960, 240, false, true));
 	fifthRow.push_back(new GameTile("ground.png", 1020, 240, true, false));
 	fifthRow.push_back(new GameTile("ground.png", 1080, 240, true, false));
 	fifthRow.push_back(new GameTile("ground.png", 1140, 240, true, false));
@@ -216,8 +200,8 @@ void GameWorld::setUpTiles()
 	sixthRow.push_back(new GameTile("ground.png", 720, 300, true, false));
 	sixthRow.push_back(new GameTile("ground.png", 780, 300, true, false));
 	sixthRow.push_back(new GameTile("ground.png", 840, 300, true, false));
-	sixthRow.push_back(new GameTile("ground.png", 900, 300, true, false));
-	sixthRow.push_back(new GameTile("ground.png", 960, 300, true, false));
+	sixthRow.push_back(new GameTile("wall.png", 900, 300, false, true));
+	sixthRow.push_back(new GameTile("wall.png", 960, 300, false, true));
 	sixthRow.push_back(new GameTile("ground.png", 1020, 300, true, false));
 	sixthRow.push_back(new GameTile("ground.png", 1080, 300, true, false));
 	sixthRow.push_back(new GameTile("ground.png", 1140, 300, true, false));
@@ -251,8 +235,8 @@ void GameWorld::setUpTiles()
 	seventhRow.push_back(new GameTile("ground.png", 720, 360, true, false));
 	seventhRow.push_back(new GameTile("ground.png", 780, 360, true, false));
 	seventhRow.push_back(new GameTile("ground.png", 840, 360, true, false));
-	seventhRow.push_back(new GameTile("ground.png", 900, 360, true, false));
-	seventhRow.push_back(new GameTile("ground.png", 960, 360, true, false));
+	seventhRow.push_back(new GameTile("wall.png", 900, 360, false, true));
+	seventhRow.push_back(new GameTile("wall.png", 960, 360, false, true));
 	seventhRow.push_back(new GameTile("ground.png", 1020, 360, true, false));
 	seventhRow.push_back(new GameTile("ground.png", 1080, 360, true, false));
 	seventhRow.push_back(new GameTile("ground.png", 1140, 360, true, false));
@@ -286,8 +270,8 @@ void GameWorld::setUpTiles()
 	eighthRow.push_back(new GameTile("ground.png", 720, 420, true, false));
 	eighthRow.push_back(new GameTile("ground.png", 780, 420, true, false));
 	eighthRow.push_back(new GameTile("ground.png", 840, 420, true, false));
-	eighthRow.push_back(new GameTile("ground.png", 900, 420, true, false));
-	eighthRow.push_back(new GameTile("ground.png", 960, 420, true, false));
+	eighthRow.push_back(new GameTile("wall.png", 900, 420, false , true));
+	eighthRow.push_back(new GameTile("wall.png", 960, 420, false, true));
 	eighthRow.push_back(new GameTile("ground.png", 1020, 420, true, false));
 	eighthRow.push_back(new GameTile("ground.png", 1080, 420, true, false));
 	eighthRow.push_back(new GameTile("ground.png", 1140, 420, true, false));
@@ -321,8 +305,8 @@ void GameWorld::setUpTiles()
 	ninthRow.push_back(new GameTile("ground.png", 720, 480, true, false));
 	ninthRow.push_back(new GameTile("ground.png", 780, 480, true, false));
 	ninthRow.push_back(new GameTile("ground.png", 840, 480, true, false));
-	ninthRow.push_back(new GameTile("ground.png", 900, 480, true, false));
-	ninthRow.push_back(new GameTile("ground.png", 960, 480, true, false));
+	ninthRow.push_back(new GameTile("wall.png", 900, 480, false, true));
+	ninthRow.push_back(new GameTile("wall.png", 960, 480, false, true));
 	ninthRow.push_back(new GameTile("ground.png", 1020, 480, true, false));
 	ninthRow.push_back(new GameTile("ground.png", 1080, 480, true, false));
 	ninthRow.push_back(new GameTile("ground.png", 1140, 480, true, false));
@@ -356,8 +340,8 @@ void GameWorld::setUpTiles()
 	tenthRow.push_back(new GameTile("ground.png", 720, 540, true, false));
 	tenthRow.push_back(new GameTile("ground.png", 780, 540, true, false));
 	tenthRow.push_back(new GameTile("ground.png", 840, 540, true, false));
-	tenthRow.push_back(new GameTile("ground.png", 900, 540, true, false));
-	tenthRow.push_back(new GameTile("ground.png", 960, 540, true, false));
+	tenthRow.push_back(new GameTile("wall.png", 900, 540, false, true));
+	tenthRow.push_back(new GameTile("wall.png", 960, 540, false, true));
 	tenthRow.push_back(new GameTile("ground.png", 1020, 540, true, false));
 	tenthRow.push_back(new GameTile("ground.png", 1080, 540, true, false));
 	tenthRow.push_back(new GameTile("ground.png", 1140, 540, true, false));
@@ -391,8 +375,8 @@ void GameWorld::setUpTiles()
 	eleventhRow.push_back(new GameTile("ground.png", 720, 600, true, false));
 	eleventhRow.push_back(new GameTile("ground.png", 780, 600, true, false));
 	eleventhRow.push_back(new GameTile("ground.png", 840, 600, true, false));
-	eleventhRow.push_back(new GameTile("ground.png", 900, 600, true, false));
-	eleventhRow.push_back(new GameTile("ground.png", 960, 600, true, false));
+	eleventhRow.push_back(new GameTile("wall.png", 900, 600, false, true));
+	eleventhRow.push_back(new GameTile("wall.png", 960, 600, false, true));
 	eleventhRow.push_back(new GameTile("ground.png", 1020, 600, true, false));
 	eleventhRow.push_back(new GameTile("ground.png", 1080, 600, true, false));
 	eleventhRow.push_back(new GameTile("ground.png", 1140, 600, true, false));
@@ -426,8 +410,8 @@ void GameWorld::setUpTiles()
 	twelfthRow.push_back(new GameTile("ground.png", 720, 660, true, false));
 	twelfthRow.push_back(new GameTile("ground.png", 780, 660, true, false));
 	twelfthRow.push_back(new GameTile("ground.png", 840, 660, true, false));
-	twelfthRow.push_back(new GameTile("ground.png", 900, 660, true, false));
-	twelfthRow.push_back(new GameTile("ground.png", 960, 660, true, false));
+	twelfthRow.push_back(new GameTile("wall.png", 900, 660, false, true));
+	twelfthRow.push_back(new GameTile("wall.png", 960, 660, false, true));
 	twelfthRow.push_back(new GameTile("ground.png", 1020, 660, true, false));
 	twelfthRow.push_back(new GameTile("ground.png", 1080, 660, true, false));
 	twelfthRow.push_back(new GameTile("ground.png", 1140, 660, true, false));
@@ -461,8 +445,8 @@ void GameWorld::setUpTiles()
 	thirteenthRow.push_back(new GameTile("ground.png", 720, 720, true, false));
 	thirteenthRow.push_back(new GameTile("ground.png", 780, 720, true, false));
 	thirteenthRow.push_back(new GameTile("ground.png", 840, 720, true, false));
-	thirteenthRow.push_back(new GameTile("ground.png", 900, 720, true, false));
-	thirteenthRow.push_back(new GameTile("ground.png", 960, 720, true, false));
+	thirteenthRow.push_back(new GameTile("wall.png", 900, 720, false, true));
+	thirteenthRow.push_back(new GameTile("wall.png", 960, 720, false, true));
 	thirteenthRow.push_back(new GameTile("ground.png", 1020, 720, true, false));
 	thirteenthRow.push_back(new GameTile("ground.png", 1080, 720, true, false));
 	thirteenthRow.push_back(new GameTile("ground.png", 1140, 720, true, false));
@@ -496,8 +480,8 @@ void GameWorld::setUpTiles()
 	fourteenthRow.push_back(new GameTile("ground.png", 720, 780, true, false));
 	fourteenthRow.push_back(new GameTile("ground.png", 780, 780, true, false));
 	fourteenthRow.push_back(new GameTile("ground.png", 840, 780, true, false));
-	fourteenthRow.push_back(new GameTile("ground.png", 900, 780, true, false));
-	fourteenthRow.push_back(new GameTile("ground.png", 960, 780, true, false));
+	fourteenthRow.push_back(new GameTile("wall.png", 900, 780, false, true));
+	fourteenthRow.push_back(new GameTile("wall.png", 960, 780, false, true));
 	fourteenthRow.push_back(new GameTile("ground.png", 1020, 780, true, false));
 	fourteenthRow.push_back(new GameTile("ground.png", 1080, 780, true, false));
 	fourteenthRow.push_back(new GameTile("ground.png", 1140, 780, true, false));
@@ -529,12 +513,12 @@ void GameWorld::setUpTiles()
 	fifteenthRow.push_back(new GameTile("ground.png", 600, 840, true, false));
 	fifteenthRow.push_back(new GameTile("ground.png", 660, 840, true, false));
 	fifteenthRow.push_back(new GameTile("ground.png", 720, 840, true, false));
-	fifteenthRow.push_back(new GameTile("ground.png", 780, 840, true, false));
-	fifteenthRow.push_back(new GameTile("ground.png", 840, 840, true, false));
-	fifteenthRow.push_back(new GameTile("ground.png", 900, 840, true, false));
-	fifteenthRow.push_back(new GameTile("ground.png", 960, 840, true, false));
-	fifteenthRow.push_back(new GameTile("ground.png", 1020, 840, true, false));
-	fifteenthRow.push_back(new GameTile("ground.png", 1080, 840, true, false));
+	fifteenthRow.push_back(new GameTile("wall.png", 780, 840, false, true));
+	fifteenthRow.push_back(new GameTile("wall.png", 840, 840, false, true));
+	fifteenthRow.push_back(new GameTile("wall.png", 900, 840, false, true));
+	fifteenthRow.push_back(new GameTile("wall.png", 960, 840, false, true));
+	fifteenthRow.push_back(new GameTile("wall.png", 1020, 840, false, true));
+	fifteenthRow.push_back(new GameTile("wall.png", 1080, 840, false, true));
 	fifteenthRow.push_back(new GameTile("ground.png", 1140, 840, true, false));
 	fifteenthRow.push_back(new GameTile("ground.png", 1200, 840, true, false));
 	fifteenthRow.push_back(new GameTile("ground.png", 1260, 840, true, false));
@@ -654,14 +638,6 @@ void GameWorld::setUpTiles()
 	eighteenthRow.push_back(new GameTile("block.png", 1740, 1020, false, false));
 	eighteenthRow.push_back(new GameTile("block.png", 1800, 1020, false, false));
 	eighteenthRow.push_back(new GameTile("block.png", 1860, 1020, false, false));
-
-
-
-
-
-
-
-
 	tiles.push_back(eighteenthRow);
 }
 

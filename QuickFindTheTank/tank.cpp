@@ -29,7 +29,7 @@ void tank::move_u()
 void tank::move_d()
 {
 	tank_sprite.setRotation(180); //on tourne le tank
-	y = y + (speed );
+	y = y + (speed);
 	tank_sprite.setPosition(x, y);
 }
 

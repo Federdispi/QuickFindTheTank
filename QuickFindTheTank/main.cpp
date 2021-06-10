@@ -17,15 +17,15 @@
 #include "bullet.h"
 #include "tank_enemy.h"
 #include <time.h>
-#include "pause.h"
 
 
 
 int main()
 {
     srand((unsigned int)time(0)); //rand()%6+1 pour un nombre aleatoire entre 1 et 6
-	int a = 0, b = 0,c = 0, d = 0;
-    float windowHeight = 1080;
+    int a = 0, b = 0, c = 0, d = 0;
+    float time = 0;
+	float windowHeight = 1080;
 	float windowWidth = 1920;
     int direction = rand() % 4 + 1;
     std::string name;
@@ -37,19 +37,20 @@ int main()
         window.setFramerateLimit(60);
 
         GameWorld gameWorld = GameWorld(); //Map
-
+        
         Menu_MAP Menu_MAP; //Menu map
 
-        tank tank_1 = tank(500, 500, 5);
+        tank tank_1 = tank(480, 540, 5);
 
-        tank_enemy tankE_1 = tank_enemy(1000, 500, 5);
+        tank_enemy tankE_1 = tank_enemy(1340, 450, 5);
 
         sf::Clock clock;
         sf::Clock clock2;
         sf::Clock main;
+
         sf::Time last_frame = main.getElapsedTime();
         sf::Time time;
-       
+
         std::vector<bullet*> tablo_bullet;
 
         std::vector<bullet*> tablo_bulletE;
@@ -126,15 +127,12 @@ int main()
                     c = 0;
                     d = 0;
                     music3.play(); // Play menu music after a game
-                    music2.stop(); // Stop the score music 
                     tablo_bullet.clear();
                     tablo_bulletE.clear();
-                    tank_1.set_x(500);
-                    tank_1.set_y(500);
-                    tankE_1.set_x(1000);
-                    tankE_1.set_y(500);
+                    gameWorld.setUpTiles();
                 }
                 
+                music2.stop();
 
 
                 if (event.type == sf::Event::Closed)
@@ -180,7 +178,9 @@ int main()
                                             b = 1;
                                             music.play(); //Play game music
                                         }
-                                   
+                                        clock.restart();
+                                        clock2.restart();
+                                        main.restart();
                                         a = 1; //Play game
                                     }
                                     else
@@ -208,22 +208,16 @@ int main()
                                     std::cout << "retour au menu" << std::endl;
                                     a = 3; //Return to the start of the program (Menu)
                             }
-                            else if (a == 4) //If we came from Pause
-                            {
-                                std::cout << "Retour a la partie" << std::endl;
-                                music.play(); //Play game music
-                                a = 1;
-                            }
                             break;
 
                             
                         case sf::Keyboard::E:
                             if (a == 1) 
-                                {
-                                std::cout << "Pause" << std::endl;
-                                a = 4; //Pause
+                            {
+                                std::cout << "Fin de la partie" << std::endl;
+                                a = 2; //Go to Score
                                 d = 2; //The key up and down haven't effect
-                                }
+                            }
                             break;
 
                         }
@@ -255,21 +249,67 @@ int main()
                 for (int z = 0; z < tablo_bullet.size(); z++)
                 {
                     tablo_bullet[z]->moove();
-                    window.draw(tablo_bullet[z]->get_sprite());
-                    if (tablo_bullet[z]->get_x() > 1920 || tablo_bullet[z]->get_y() > 1080 || tablo_bullet[z]->get_x() < 0 || tablo_bullet[z]->get_y() < 0)
+                    if (!tablo_bullet[z]->touche)
+                        window.draw(tablo_bullet[z]->get_sprite());
+                    if (tablo_bullet[z]->get_sprite().getGlobalBounds().intersects(tankE_1.get_sprite_tank().getGlobalBounds()))
                     {
-                        tablo_bullet[z]->~bullet();
-                        tablo_bullet.erase(tablo_bullet.begin() + z);
+                        a = 2;
+                        d = 2;
+                    }
+                    for (int i = 0; i < gameWorld.gridHeight; i++)
+                    {
+                        for (int j = 0; j < gameWorld.gridLength; j++)
+                        {
+                            if (tablo_bullet[z]->get_sprite().getGlobalBounds().intersects(gameWorld.tiles[i][j]->sprite.getGlobalBounds()) && !gameWorld.tiles[i][j]->isPassable)
+                            {
+                                if (gameWorld.tiles[i][j]->isDestructible)
+                                {
+                                    gameWorld.tiles[i][j]->isDestructible = false;
+                                    gameWorld.tiles[i][j]->isPassable = true;
+                                    if (gameWorld.tiles[i][j]->setUpSprite("ground.png"))
+                                        std::cout << "Texture changee correctement" << std::endl;
+                                }
+                                else
+                                {
+                                    tablo_bullet[z]->touche = true;
+                                    tablo_bullet[z]->~bullet();
+                                    //tablo_bullet.erase(tablo_bullet.begin() + z);
+                                }
+                            }
+
+                        }
                     }
                 }
                 for (int z = 0; z < tablo_bulletE.size(); z++)
                 {
                     tablo_bulletE[z]->moove();
                     window.draw(tablo_bulletE[z]->get_sprite());
-                    if (tablo_bulletE[z]->get_x() > 1920 || tablo_bulletE[z]->get_y() > 1080 || tablo_bulletE[z]->get_x() < 0 || tablo_bulletE[z]->get_y() < 0)
+                    if (tablo_bulletE[z]->get_sprite().getGlobalBounds().intersects(tank_1.get_sprite_tank().getGlobalBounds()))
                     {
-                        tablo_bulletE[z]->~bullet();
-                        tablo_bulletE.erase(tablo_bulletE.begin() + z);
+                        a = 2;
+                        d = 2;
+                    }
+                    for (int i = 0; i < gameWorld.gridHeight; i++)
+                    {
+                        for (int j = 0; j < gameWorld.gridLength; j++)
+                        {
+                            if (tablo_bulletE[z]->get_sprite().getGlobalBounds().intersects(gameWorld.tiles[i][j]->sprite.getGlobalBounds()) && !gameWorld.tiles[i][j]->isPassable)
+                            {
+                                if (gameWorld.tiles[i][j]->isDestructible)
+                                {
+                                    gameWorld.tiles[i][j]->isDestructible = false;
+                                    gameWorld.tiles[i][j]->isPassable = true;
+                                    if (gameWorld.tiles[i][j]->setUpSprite("ground.png"))
+                                        std::cout << "Texture changee correctement" << std::endl;
+                                }
+                                else
+                                {
+                                    tablo_bulletE[z]->~bullet();
+                                    //tablo_bulletE.erase(tablo_bulletE.begin() + z);
+                                    tablo_bulletE.erase(tablo_bulletE.begin() + z);
+                                }
+                            }
+                        }
                     }
                 }
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
@@ -282,41 +322,117 @@ int main()
                 window.draw(tank_1.get_sprite_turret());
                 window.draw(tankE_1.get_sprite_tank());
                 window.draw(tankE_1.get_sprite_turret());
+
                 switch (direction)
                 {
                 case 1:
-                    if (tankE_1.get_y() > 80)
+                    if(tankE_1.get_y()>120)
                         tankE_1.move_u();
+                    for (int i = 0; i < gameWorld.gridHeight; i++)
+                    {
+                        for (int j = 0; j < gameWorld.gridLength; j++)
+                        {
+                            if (tankE_1.get_sprite_tank().getGlobalBounds().intersects(gameWorld.tiles[i][j]->sprite.getGlobalBounds()) && !gameWorld.tiles[i][j]->isPassable)
+                                tankE_1.move_d();
+                        }
+                    }
                     break;
                 case 2:
-                    if (tankE_1.get_y() < 1000)
+                    if (tankE_1.get_y() < 960)
                         tankE_1.move_d();
+                    for (int i = 0; i < gameWorld.gridHeight; i++)
+                    {
+                        for (int j = 0; j < gameWorld.gridLength; j++)
+                        {
+                            if (tankE_1.get_sprite_tank().getGlobalBounds().intersects(gameWorld.tiles[i][j]->sprite.getGlobalBounds()) && !gameWorld.tiles[i][j]->isPassable)
+                                tankE_1.move_u();
+                        }
+                    }
                     break;
                 case 3:
-                    if (tankE_1.get_x() > 80)
-                        tankE_1.move_l();
+                    if (tankE_1.get_x() < 1800)
+                        tankE_1.move_r();
+                    for (int i = 0; i < gameWorld.gridHeight; i++)
+                    {
+                        for (int j = 0; j < gameWorld.gridLength; j++)
+                        {
+                            if (tankE_1.get_sprite_tank().getGlobalBounds().intersects(gameWorld.tiles[i][j]->sprite.getGlobalBounds()) && !gameWorld.tiles[i][j]->isPassable)
+                                tankE_1.move_l();
+                        }
+                    }
                     break;
                 case 4:
-                    if (tankE_1.get_x() < 1840)
-                        tankE_1.move_r();
+                    if (tankE_1.get_x() > 120)
+                        tankE_1.move_l();
+                    for (int i = 0; i < gameWorld.gridHeight; i++)
+                    {
+                        for (int j = 0; j < gameWorld.gridLength; j++)
+                        {
+                            if (tankE_1.get_sprite_tank().getGlobalBounds().intersects(gameWorld.tiles[i][j]->sprite.getGlobalBounds()) && !gameWorld.tiles[i][j]->isPassable)
+                                tankE_1.move_r();
+                        }
+                    }
                     break;
                 }
 
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)||sf::Keyboard::isKeyPressed(sf::Keyboard::W))
                 {
-                    tank_1.move_u();
+                    if (tank_1.get_y() > 120)
+                        tank_1.move_u();
+                    for (int i = 0; i < gameWorld.gridHeight; i++)
+                    {
+                        for (int j = 0; j < gameWorld.gridLength; j++)
+                        {
+                            if (tank_1.get_sprite_tank().getGlobalBounds().intersects(gameWorld.tiles[i][j]->sprite.getGlobalBounds()) && !gameWorld.tiles[i][j]->isPassable)
+                                tank_1.move_d();
+                        }
+                    }
                 }
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
                 {
-                    tank_1.move_d();
+                    if (tank_1.get_y() < 960)
+                        tank_1.move_d();
+                    for (int i = 0; i < gameWorld.gridHeight; i++)
+                    {
+                        for (int j = 0; j < gameWorld.gridLength; j++)
+                        {
+                            if (tank_1.get_sprite_tank().getGlobalBounds().intersects(gameWorld.tiles[i][j]->sprite.getGlobalBounds()) && !gameWorld.tiles[i][j]->isPassable)
+                                tank_1.move_u();
+                        }
+                    }
                 }
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
                 {
-                    tank_1.move_r();
+                    if (tank_1.get_x() < 1800)
+                        tank_1.move_r();
+                    for (int i = 0; i < gameWorld.gridHeight; i++)
+                    {
+                        for (int j = 0; j < gameWorld.gridLength; j++)
+                        {
+                            if (tank_1.get_sprite_tank().getGlobalBounds().intersects(gameWorld.tiles[i][j]->sprite.getGlobalBounds()) && !gameWorld.tiles[i][j]->isPassable)
+                                tank_1.move_l();
+                        }
+                    }
                 }
-                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)||sf::Keyboard::isKeyPressed(sf::Keyboard::A))
                 {
-                    tank_1.move_l();
+                    if (tank_1.get_x() > 120)
+                        tank_1.move_l();
+                    for (int i = 0; i < gameWorld.gridHeight; i++)
+                    {
+                        for (int j = 0; j < gameWorld.gridLength; j++)
+                        {
+                            if (tank_1.get_sprite_tank().getGlobalBounds().intersects(gameWorld.tiles[i][j]->sprite.getGlobalBounds()) && !gameWorld.tiles[i][j]->isPassable)
+                                tank_1.move_r();
+                        }
+                    }
+                }
+
+
+                if (tank_1.get_sprite_tank().getGlobalBounds().intersects(tankE_1.get_sprite_tank().getGlobalBounds()))
+                {
+                    a = 2;
+                    d = 2;
                 }
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
                 {
@@ -325,7 +441,7 @@ int main()
                         tablo_bullet.push_back(new bullet(tank_1.get_x(), tank_1.get_y(), 4, sf::Mouse::getPosition(window))); //tablo_bullet.pop_back
                         sound4.play(); // Play the shoot sound
                         clock2.restart();
-                    } 
+                    }
                 }
             }
             else if (a == 2) //If we want go to Score
@@ -340,13 +456,6 @@ int main()
                 Score score(window.getSize().x, window.getSize().y); //Score
                 Menu_MAP.drawBackground(window); //Score map = Menu map
                 score.draw(window);
-            }
-            else if (a == 4) //If we want go to Pause
-            {
-                music.stop(); //Stop the music of Game
-                Pause Pause(window.getSize().x, window.getSize().y); //Pause
-                Menu_MAP.drawBackground(window); //Pause map = Menu map
-                Pause.draw(window);
             }
             
             else //Menu Drawing

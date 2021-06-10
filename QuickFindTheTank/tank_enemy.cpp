@@ -3,11 +3,11 @@
 tank_enemy::tank_enemy(int _x, int _y, float _speed)
 	:x(_x), y(_y), speed(_speed)
 {
-	if (!tank_texture.loadFromFile("tank.png"))
+	if (!tank_texture.loadFromFile("tank2.png"))
 	{
 		std::cout << "l'image tank.png n'a pas pu etre chargee" << std::endl;
 	}
-	if (!turret_texture.loadFromFile("turret.png"))
+	if (!turret_texture.loadFromFile("turret2.png"))
 	{
 		std::cout << "l'image turret.png n'a pas pu etre chargee" << std::endl;
 	}
@@ -36,7 +36,7 @@ void tank_enemy::move_d()
 void tank_enemy::move_l()
 {
 	tank_sprite.setRotation(270); //on tourne le tank
-	x = x + (speed);
+	x = x - (speed);
 	tank_sprite.setPosition(x, y);
 }
 
