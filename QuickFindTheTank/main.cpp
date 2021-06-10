@@ -24,7 +24,7 @@ int main()
 {
     srand((unsigned int)time(0)); //rand()%6+1 pour un nombre aleatoire entre 1 et 6
 	int a = 0, b = 0,c = 0, d = 0;
-    float windowHeight = 1080, time = 0;
+    float windowHeight = 1080;
 	float windowWidth = 1920;
     int direction = rand() % 4 + 1;
     std::string name;
@@ -44,7 +44,9 @@ int main()
         sf::Clock clock;
         sf::Clock clock2;
         sf::Clock main;
-
+        sf::Time last_frame = main.getElapsedTime();
+        sf::Time time;
+       
         std::vector<bullet*> tablo_bullet;
 
         std::vector<bullet*> tablo_bulletE;
@@ -221,8 +223,7 @@ int main()
 
             window.clear();
             sf::Time elapsed = clock.getElapsedTime();
-            sf::Time temps = main.getElapsedTime();
-            time = temps.asMilliseconds();
+            time = main.getElapsedTime() - last_frame;
             main.restart();
             if (elapsed.asSeconds() > 2)
             {
@@ -238,7 +239,7 @@ int main()
                 sf::Time elapsed2 = clock2.getElapsedTime();
                 for (int z = 0; z < tablo_bullet.size(); z++)
                 {
-                    tablo_bullet[z]->moove(time);
+                    tablo_bullet[z]->moove(time.asMilliseconds());
                     window.draw(tablo_bullet[z]->get_sprite());
                     if (tablo_bullet[z]->get_x() > 1920 || tablo_bullet[z]->get_y() > 1080 || tablo_bullet[z]->get_x() < 0 || tablo_bullet[z]->get_y() < 0)
                     {
@@ -248,7 +249,7 @@ int main()
                 }
                 for (int z = 0; z < tablo_bulletE.size(); z++)
                 {
-                    tablo_bulletE[z]->moove(time);
+                    tablo_bulletE[z]->moove(time.asMilliseconds());
                     window.draw(tablo_bulletE[z]->get_sprite());
                     if (tablo_bulletE[z]->get_x() > 1920 || tablo_bulletE[z]->get_y() > 1080 || tablo_bulletE[z]->get_x() < 0 || tablo_bulletE[z]->get_y() < 0)
                     {
@@ -269,38 +270,38 @@ int main()
                 switch (direction)
                 {
                 case 1:
-                    if (tankE_1.get_y() - tankE_1.get_speed() * time > 80)
-                        tankE_1.move_u(time);
+                    if (tankE_1.get_y() > 80)
+                        tankE_1.move_u(time.asMilliseconds());
                     break;
                 case 2:
-                    if (tankE_1.get_y() + tankE_1.get_speed() * time < 1000)
-                        tankE_1.move_d(time);
+                    if (tankE_1.get_y() < 1000)
+                        tankE_1.move_d(time.asMilliseconds());
                     break;
                 case 3:
-                    if (tankE_1.get_x() + tankE_1.get_speed() * time > 80)
-                        tankE_1.move_l(time);
+                    if (tankE_1.get_x() > 80)
+                        tankE_1.move_l(time.asMilliseconds());
                     break;
                 case 4:
-                    if (tankE_1.get_x() + tankE_1.get_speed() * time < 1840)
-                        tankE_1.move_r(time);
+                    if (tankE_1.get_x() < 1840)
+                        tankE_1.move_r(time.asMilliseconds());
                     break;
                 }
 
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
                 {
-                    tank_1.move_u(time);
+                    tank_1.move_u(time.asMilliseconds());
                 }
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
                 {
-                    tank_1.move_d(time);
+                    tank_1.move_d(time.asMilliseconds());
                 }
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
                 {
-                    tank_1.move_r(time);
+                    tank_1.move_r(time.asMilliseconds());
                 }
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
                 {
-                    tank_1.move_l(time);
+                    tank_1.move_l(time.asMilliseconds());
                 }
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
                 {

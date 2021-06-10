@@ -15,6 +15,8 @@ private:
 	sf::Sprite turret_sprite;
 public:
 	tank(int _x, int _y, float _speed);
+	void set_x(int _x);
+	void set_y(int _y);
 	int get_x();
 	int get_y();
 	float get_speed();

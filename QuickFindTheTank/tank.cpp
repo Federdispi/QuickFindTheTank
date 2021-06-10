@@ -72,6 +72,20 @@ float tank::get_speed()
 	return speed;
 }
 
+void tank::set_x(int _x)
+{
+	x = _x;
+	tank_sprite.setPosition(x, y);
+	turret_sprite.setPosition(x, y);
+}
+
+void tank::set_y(int _y)
+{
+	y = _y;
+	tank_sprite.setPosition(x, y);
+	turret_sprite.setPosition(x, y);
+}
+
 void tank::turret(sf::Vector2i souris) //pour actualiser la position de la tourelle
 {
 	turret_sprite.setPosition(x, y);
