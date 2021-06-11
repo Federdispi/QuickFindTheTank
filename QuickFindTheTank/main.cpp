@@ -36,9 +36,9 @@ int main()
 
         Menu menu(window.getSize().x, window.getSize().y); //Menu
 
-        window.setMouseCursorVisible(false);
+        window.setMouseCursorVisible(false);//on efface la souris de la fenetre
         sf::Texture mouse;
-        mouse.loadFromFile("target.png");
+        mouse.loadFromFile("target.png"); //texture du viseur
         sf::Sprite mouse_sprite;
         mouse_sprite.setTexture(mouse);
         mouse_sprite.setOrigin(34, 35);
@@ -62,8 +62,8 @@ int main()
         sf::Time last_frame = main.getElapsedTime();
         sf::Time time;
 
-        std::vector<bullet*> tablo_bullet;
-        std::vector<bullet*> tablo_bulletE;
+        std::vector<bullet*> tablo_bullet; //tableau pour les balles de notre tank
+        std::vector<bullet*> tablo_bulletE;//tableau pour les balles du tank ennemi
         
         //Textbox for name
 #pragma region textbox
@@ -275,7 +275,7 @@ int main()
                 direction = rand() % 4 + 1;
             }
 
-            mouse_sprite.setPosition(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
+            mouse_sprite.setPosition(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);//on dessine le nouveau sprite de la souris
 
             if (a == 1) //If we want to play 
             {
