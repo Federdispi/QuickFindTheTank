@@ -148,12 +148,12 @@ int main()
                     b = 0;
                     c = 0;
                     d = 0;
-                    vie = 3;
+                    vie = 3; //reset the enemy tank life points
                     music3.play(); // Play menu music after a game
                     music2.stop(); // Stop the score music 
                     tablo_bullet.clear();
                     tablo_bulletE.clear();
-                    gameWorld.setUpTiles();
+                    gameWorld.setUpTiles(); //reset the tile textures
                     tank_1.set_x(480); //Reset tank position
                     tank_1.set_y(540); //Reset tank position
                     tankE_1.set_x(1340); //Reset tank position
@@ -297,6 +297,7 @@ int main()
                     tablo_bullet[z]->moove();
                     if (!tablo_bullet[z]->touche)
                         window.draw(tablo_bullet[z]->get_sprite());
+                    //if there is a collision between the bullet and the enemy tank
                     if (tablo_bullet[z]->get_sprite().getGlobalBounds().intersects(tankE_1.get_sprite_tank().getGlobalBounds()))
                     {
                         elapsed_immortal = immortal.getElapsedTime();
@@ -320,6 +321,7 @@ int main()
                     {
                         for (int j = 0; j < gameWorld.gridLength; j++)
                         {
+                            //if there is a collision between the bullet and a non passable tile
                             if (tablo_bullet[z]->get_sprite().getGlobalBounds().intersects(gameWorld.tiles[i][j]->sprite.getGlobalBounds()) && !gameWorld.tiles[i][j]->isPassable)
                             {
                                 if (gameWorld.tiles[i][j]->isDestructible)
@@ -343,6 +345,7 @@ int main()
                 {
                     tablo_bulletE[z]->moove();
                     window.draw(tablo_bulletE[z]->get_sprite());
+                    //if there is a collision between the bullet and our tank
                     if (tablo_bulletE[z]->get_sprite().getGlobalBounds().intersects(tank_1.get_sprite_tank().getGlobalBounds()))
                     {
                         a = 2;
@@ -353,6 +356,7 @@ int main()
                     {
                         for (int j = 0; j < gameWorld.gridLength; j++)
                         {
+                            //if there is a collision between the bullet and a non possable tile
                             if (tablo_bulletE[z]->get_sprite().getGlobalBounds().intersects(gameWorld.tiles[i][j]->sprite.getGlobalBounds()) && !gameWorld.tiles[i][j]->isPassable)
                             {
                                 if (gameWorld.tiles[i][j]->isDestructible)
@@ -391,6 +395,7 @@ int main()
                     {
                         for (int j = 0; j < gameWorld.gridLength; j++)
                         {
+                            //if there is a collision between the enemy tank and a non passable tile
                             if (tankE_1.get_sprite_tank().getGlobalBounds().intersects(gameWorld.tiles[i][j]->sprite.getGlobalBounds()) && !gameWorld.tiles[i][j]->isPassable)
                                 tankE_1.move_d();
                         }
@@ -403,6 +408,7 @@ int main()
                     {
                         for (int j = 0; j < gameWorld.gridLength; j++)
                         {
+                            //if there is a collision between the enemy tank and a non passable tile
                             if (tankE_1.get_sprite_tank().getGlobalBounds().intersects(gameWorld.tiles[i][j]->sprite.getGlobalBounds()) && !gameWorld.tiles[i][j]->isPassable)
                                 tankE_1.move_u();
                         }
@@ -415,6 +421,7 @@ int main()
                     {
                         for (int j = 0; j < gameWorld.gridLength; j++)
                         {
+                            //if there is a collision between the enemy tank and a non passable tile
                             if (tankE_1.get_sprite_tank().getGlobalBounds().intersects(gameWorld.tiles[i][j]->sprite.getGlobalBounds()) && !gameWorld.tiles[i][j]->isPassable)
                                 tankE_1.move_l();
                         }
@@ -427,6 +434,7 @@ int main()
                     {
                         for (int j = 0; j < gameWorld.gridLength; j++)
                         {
+                            //if there is a collision between the enemy tank and a non passable tile
                             if (tankE_1.get_sprite_tank().getGlobalBounds().intersects(gameWorld.tiles[i][j]->sprite.getGlobalBounds()) && !gameWorld.tiles[i][j]->isPassable)
                                 tankE_1.move_r();
                         }
@@ -442,6 +450,7 @@ int main()
                     {
                         for (int j = 0; j < gameWorld.gridLength; j++)
                         {
+                            //if there is a collision between the tank and a non passable tile
                             if (tank_1.get_sprite_tank().getGlobalBounds().intersects(gameWorld.tiles[i][j]->sprite.getGlobalBounds()) && !gameWorld.tiles[i][j]->isPassable)
                                 tank_1.move_d();
                         }
@@ -455,6 +464,7 @@ int main()
                     {
                         for (int j = 0; j < gameWorld.gridLength; j++)
                         {
+                            //if there is a collision between the tank and a non passable tile
                             if (tank_1.get_sprite_tank().getGlobalBounds().intersects(gameWorld.tiles[i][j]->sprite.getGlobalBounds()) && !gameWorld.tiles[i][j]->isPassable)
                                 tank_1.move_u();
                         }
@@ -468,6 +478,7 @@ int main()
                     {
                         for (int j = 0; j < gameWorld.gridLength; j++)
                         {
+                            //if there is a collision between the tank and a non passable tile
                             if (tank_1.get_sprite_tank().getGlobalBounds().intersects(gameWorld.tiles[i][j]->sprite.getGlobalBounds()) && !gameWorld.tiles[i][j]->isPassable)
                                 tank_1.move_l();
                         }
@@ -481,6 +492,7 @@ int main()
                     {
                         for (int j = 0; j < gameWorld.gridLength; j++)
                         {
+                            //if there is a collision between the tank and a non passable tile
                             if (tank_1.get_sprite_tank().getGlobalBounds().intersects(gameWorld.tiles[i][j]->sprite.getGlobalBounds()) && !gameWorld.tiles[i][j]->isPassable)
                                 tank_1.move_r();
                         }
