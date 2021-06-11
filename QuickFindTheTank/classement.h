@@ -30,6 +30,7 @@ void classement (std::string name, const float _time, std::vector<std::string> &
         Score << "ERREUR: Impossible d'ouvrir le fichier." << std::endl;
     }
     Name.close();
+    ////Writing names and score in a table
     std::ifstream Name_l("name.txt");
 
     for (int k = 0; k < tab_name.size(); k++)
@@ -66,8 +67,8 @@ void classement (std::string name, const float _time, std::vector<std::string> &
             }
         }
     }
-    Name_l.close();
-
+    score_l.close();
+    //Bubble sorting
     float tmp;
     std::string name_tmp;
 
