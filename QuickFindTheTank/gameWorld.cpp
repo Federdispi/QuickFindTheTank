@@ -634,9 +634,9 @@ void GameWorld::setUpTiles()
 	eighteenthRow.push_back(new GameTile("block.png", 1500, 1020, false, false));
 	eighteenthRow.push_back(new GameTile("block.png", 1560, 1020, false, false));
 	eighteenthRow.push_back(new GameTile("block.png", 1620, 1020, false, false));
-	eighteenthRow.push_back(new GameTile("block.png", 1680, 1020, false, false));
-	eighteenthRow.push_back(new GameTile("block.png", 1740, 1020, false, false));
-	eighteenthRow.push_back(new GameTile("block.png", 1800, 1020, false, false));
+	eighteenthRow.push_back(new GameTile("heartblock.png", 1680, 1020, false, false));
+	eighteenthRow.push_back(new GameTile("heartblock.png", 1740, 1020, false, false));
+	eighteenthRow.push_back(new GameTile("heartblock.png", 1800, 1020, false, false));
 	eighteenthRow.push_back(new GameTile("block.png", 1860, 1020, false, false));
 	tiles.push_back(eighteenthRow);
 }

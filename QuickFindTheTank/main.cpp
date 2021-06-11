@@ -1,4 +1,4 @@
-#pragma one
+#pragma once
 #include <SFML/Graphics.hpp>
 #include <cstdlib>
 #include <ctime>
@@ -17,13 +17,14 @@
 #include "bullet.h"
 #include "tank_enemy.h"
 #include <time.h>
+#include "pause.h"
 
 
 
 int main()
 {
     srand((unsigned int)time(0)); //rand()%6+1 pour un nombre aleatoire entre 1 et 6
-    int a = 0, b = 0, c = 0, d = 0;
+    int a = 0, b = 0, c = 0, d = 0, vie = 3;
     float time = 0;
 	float windowHeight = 1080;
 	float windowWidth = 1920;
@@ -47,6 +48,7 @@ int main()
         sf::Clock clock;
         sf::Clock clock2;
         sf::Clock main;
+        sf::Clock immortal; //Clock for immortality
 
         sf::Time last_frame = main.getElapsedTime();
         sf::Time time;
@@ -101,6 +103,18 @@ int main()
                 std::cout << "Erreur de chargement de la bande sonore" << std::endl;
             sf::Sound sound4;
             sound4.setBuffer(buffer4);
+
+            sf::SoundBuffer buffer5;
+            if (!buffer5.loadFromFile("wall.ogg"))
+                std::cout << "Erreur de chargement de la bande sonore" << std::endl;
+            sf::Sound sound5;
+            sound5.setBuffer(buffer5); 
+
+                sf::SoundBuffer buffer6;
+            if (!buffer6.loadFromFile("Extra Tank.ogg"))
+                std::cout << "Erreur de chargement de la bande sonore" << std::endl;
+            sf::Sound sound6;
+            sound6.setBuffer(buffer6);
 #pragma endregion Music
         
         music3.play(); // Play menu music
@@ -126,13 +140,17 @@ int main()
                     b = 0;
                     c = 0;
                     d = 0;
+                    vie = 3;
                     music3.play(); // Play menu music after a game
+                    music2.stop(); // Stop the score music 
                     tablo_bullet.clear();
                     tablo_bulletE.clear();
                     gameWorld.setUpTiles();
+                    tank_1.set_x(480); //Reset tank position
+                    tank_1.set_y(540); //Reset tank position
+                    tankE_1.set_x(1340); //Reset tank position
+                    tankE_1.set_y(450); //Reset tank position
                 }
-                
-                music2.stop();
 
 
                 if (event.type == sf::Event::Closed)
@@ -211,12 +229,18 @@ int main()
                             break;
 
                             
-                        case sf::Keyboard::E:
-                            if (a == 1) 
+                        case sf::Keyboard::Escape:
+                            if (a == 1)
                             {
-                                std::cout << "Fin de la partie" << std::endl;
-                                a = 2; //Go to Score
+                                std::cout << "Pause" << std::endl;
+                                a = 4; //Pause
                                 d = 2; //The key up and down haven't effect
+                            }
+                            else if (a == 4) //If we came from Pause
+                            {
+                                std::cout << "Retour a la partie" << std::endl;
+                                music.play(); //Play game music
+                                a = 1;
                             }
                             break;
 
@@ -234,18 +258,29 @@ int main()
             sf::Time elapsed = clock.getElapsedTime();
             time = main.getElapsedTime() - last_frame;
             main.restart();
-            if (elapsed.asSeconds() > 2)
+            if (elapsed.asSeconds() > 2 && a == 1)
             {
                 tablo_bulletE.push_back(new bullet(tankE_1.get_x(), tankE_1.get_y(), 4, sf::Vector2i(tank_1.get_x(), tank_1.get_y()))); //tablo_bullet.pop_back sf::Vector2i(tank_1.get_x(), tank_1.get_y())
+                sound4.play();
                 clock.restart();
                 direction = rand() % 4 + 1;
             }
 
             if (a == 1) //If we want to play 
             {
+                if (vie == 1)
+                {
+                    gameWorld.tiles[gameWorld.gridHeight - 1][gameWorld.gridLength - 2]->setUpSprite("block.png");
+                    gameWorld.tiles[gameWorld.gridHeight - 1][gameWorld.gridLength - 3]->setUpSprite("block.png");
+                }
+                else if (vie == 2)
+                {
+                    gameWorld.tiles[gameWorld.gridHeight - 1][gameWorld.gridLength - 2]->setUpSprite("block.png");
+                }
                 music3.stop(); //Stop the music of Menu
                 play(gameWorld, window); //Game map
                 sf::Time elapsed2 = clock2.getElapsedTime();
+                sf::Time elapsed_immortal; //Time for immortality
                 for (int z = 0; z < tablo_bullet.size(); z++)
                 {
                     tablo_bullet[z]->moove();
@@ -253,8 +288,21 @@ int main()
                         window.draw(tablo_bullet[z]->get_sprite());
                     if (tablo_bullet[z]->get_sprite().getGlobalBounds().intersects(tankE_1.get_sprite_tank().getGlobalBounds()))
                     {
-                        a = 2;
-                        d = 2;
+                        elapsed_immortal = immortal.getElapsedTime();
+                        if (elapsed_immortal.asSeconds() > 3)
+                        {
+                            vie--;
+                            sound6.play(); //Extra tank sound
+                            immortal.restart();
+                        }
+                        if (vie == 0)
+                        {
+                            a = 2;
+                            sound2.play(); //Play the sound when you win
+                            d = 2;
+                        }
+                        tablo_bullet[z]->~bullet();
+                        tablo_bullet[z]->touche = true;
                     }
                     for (int i = 0; i < gameWorld.gridHeight; i++)
                     {
@@ -267,13 +315,12 @@ int main()
                                     gameWorld.tiles[i][j]->isDestructible = false;
                                     gameWorld.tiles[i][j]->isPassable = true;
                                     if (gameWorld.tiles[i][j]->setUpSprite("ground.png"))
-                                        std::cout << "Texture changee correctement" << std::endl;
+                                        sound5.play();
                                 }
                                 else
                                 {
                                     tablo_bullet[z]->touche = true;
                                     tablo_bullet[z]->~bullet();
-                                    //tablo_bullet.erase(tablo_bullet.begin() + z);
                                 }
                             }
 
@@ -287,6 +334,7 @@ int main()
                     if (tablo_bulletE[z]->get_sprite().getGlobalBounds().intersects(tank_1.get_sprite_tank().getGlobalBounds()))
                     {
                         a = 2;
+                        sound3.play(); //Play the sound when you lose
                         d = 2;
                     }
                     for (int i = 0; i < gameWorld.gridHeight; i++)
@@ -300,12 +348,11 @@ int main()
                                     gameWorld.tiles[i][j]->isDestructible = false;
                                     gameWorld.tiles[i][j]->isPassable = true;
                                     if (gameWorld.tiles[i][j]->setUpSprite("ground.png"))
-                                        std::cout << "Texture changee correctement" << std::endl;
+                                        sound5.play();
                                 }
                                 else
                                 {
                                     tablo_bulletE[z]->~bullet();
-                                    //tablo_bulletE.erase(tablo_bulletE.begin() + z);
                                     tablo_bulletE.erase(tablo_bulletE.begin() + z);
                                 }
                             }
@@ -432,6 +479,7 @@ int main()
                 if (tank_1.get_sprite_tank().getGlobalBounds().intersects(tankE_1.get_sprite_tank().getGlobalBounds()))
                 {
                     a = 2;
+                    sound3.play(); //Play the sound when you lose
                     d = 2;
                 }
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
@@ -456,6 +504,13 @@ int main()
                 Score score(window.getSize().x, window.getSize().y); //Score
                 Menu_MAP.drawBackground(window); //Score map = Menu map
                 score.draw(window);
+            }
+            else if (a == 4) //If we want go to Pause
+            {
+                music.stop(); //Stop the music of Game
+                Pause Pause(window.getSize().x, window.getSize().y); //Pause
+                Menu_MAP.drawBackground(window); //Pause map = Menu map
+                Pause.draw(window);
             }
             
             else //Menu Drawing
