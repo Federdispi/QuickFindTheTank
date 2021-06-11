@@ -36,6 +36,13 @@ int main()
 
         Menu menu(window.getSize().x, window.getSize().y); //Menu
 
+        window.setMouseCursorVisible(false);
+        sf::Texture mouse;
+        mouse.loadFromFile("target.png");
+        sf::Sprite mouse_sprite;
+        mouse_sprite.setTexture(mouse);
+        mouse_sprite.setOrigin(34, 35);
+
         window.setFramerateLimit(60);
 
         GameWorld gameWorld = GameWorld(); //Map
@@ -269,6 +276,8 @@ int main()
                 clock.restart();
                 direction = rand() % 4 + 1;
             }
+
+            mouse_sprite.setPosition(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
 
             if (a == 1) //If we want to play 
             {
@@ -533,7 +542,7 @@ int main()
                 menu.draw(window);
                 textbox1.drawTo(window);
             }
-
+            window.draw(mouse_sprite);
             window.display();
         }
         music.~Music();
