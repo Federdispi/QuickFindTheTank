@@ -1,11 +1,12 @@
 #include "gameWorld.h"
+//constructor
 GameWorld::GameWorld()
 {
 	gridLength = 32;
 	gridHeight = 18;
 	setUpTiles();
 }
-
+//sets up all the tiles
 void GameWorld::setUpTiles()
 {
 	tiles.clear();

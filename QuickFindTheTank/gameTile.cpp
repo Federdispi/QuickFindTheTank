@@ -1,4 +1,5 @@
 #include "gameTile.h"
+//constructor
 GameTile::GameTile(std::string _textureName, float _x, float _y, bool _isPassable, bool _isDestructible)
 	:isPassable(_isPassable), isDestructible(_isDestructible)
 {
@@ -7,6 +8,7 @@ GameTile::GameTile(std::string _textureName, float _x, float _y, bool _isPassabl
 	pos = sf::Vector2f(_x, _y);
 	sprite.setPosition(pos);
 }
+//sets up and changes the sprite texture 
 bool GameTile::setUpSprite(std::string _textureName)
 {
 	if (!texture.loadFromFile(_textureName))
