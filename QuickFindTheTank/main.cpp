@@ -18,6 +18,7 @@
 #include "tank_enemy.h"
 #include <time.h>
 #include "pause.h"
+#include "classement.h"
 
 
 
@@ -49,13 +50,15 @@ int main()
         sf::Clock clock2;
         sf::Clock main;
         sf::Clock immortal; //Clock for immortality
+        sf::Clock score;
 
         sf::Time last_frame = main.getElapsedTime();
         sf::Time time;
 
         std::vector<bullet*> tablo_bullet;
-
         std::vector<bullet*> tablo_bulletE;
+        //std::vector<std::string> tab_name; //Table for names
+        //std::vector<float> tab_score; //Table for the time to destroy the 3 enemy tanks
         
         //Textbox for name
 #pragma region textbox
@@ -199,6 +202,7 @@ int main()
                                         clock.restart();
                                         clock2.restart();
                                         main.restart();
+                                        score.restart();
                                         a = 1; //Play game
                                     }
                                     else
@@ -295,8 +299,18 @@ int main()
                             sound6.play(); //Extra tank sound
                             immortal.restart();
                         }
+                        //sf::Time elapsed_score;
                         if (vie == 0)
                         {
+                            //elapsed_score = score.getElapsedTime(); //Time for classement
+                            //classement(name, elapsed_score.asSeconds(), tab_name, tab_score);
+                            //for (int o = 0; o < tab_name.size() - 1; o++)
+                            //{
+                            //    for (int p = 0; p < tab_name.size() - o - 1; p++)
+                            //    {
+                            //        std::cout << tab_name[p] << "   " << tab_score[p] << std::endl;
+                            //    }
+                            //}
                             a = 2;
                             sound2.play(); //Play the sound when you win
                             d = 2;
