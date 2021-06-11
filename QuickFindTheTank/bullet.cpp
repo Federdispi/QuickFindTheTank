@@ -7,16 +7,16 @@ bullet::bullet(float _x, float _y, float _speed, sf::Vector2i souris)
 	{
 		std::cout << "l'image bullet_bill.png n'a pas pu etre chargee" << std::endl;
 	}
-	angle = atan2((souris.y - y), (souris.x - x)) * 180 / 3.141592654;
-	speedx = cos(angle * 3.141592654 / 180) * speed;
-	speedy = sin(angle * 3.141592654 / 180) * speed;
+	angle = atan2((souris.y - y), (souris.x - x)) * 180 / 3.141592654; //determine l'angle de la balle
+	speedx = cos(angle * 3.141592654 / 180) * speed; //detrmine la vitesse sur x
+	speedy = sin(angle * 3.141592654 / 180) * speed;//determine la vitesse sur y
 	bullet_sprite.setTexture(bullet_texture);
 	bullet_sprite.setOrigin(8, 5);
 	bullet_sprite.setPosition(x, y);
 	bullet_sprite.setRotation(angle);
 }
 
-bullet::~bullet()
+bullet::~bullet()//destructeur
 {
 }
 
@@ -35,7 +35,7 @@ sf::Sprite bullet::get_sprite()
 	return bullet_sprite;
 }
 
-void bullet::moove()
+void bullet::moove() //fonction pour actualiser la position de la balle
 {
 	x = x + (speedx);
 	y = y + (speedy);
