@@ -64,8 +64,6 @@ int main()
 
         std::vector<bullet*> tablo_bullet;
         std::vector<bullet*> tablo_bulletE;
-        //std::vector<std::string> tab_name; //Table for names
-        //std::vector<float> tab_score; //Table for the time to destroy the 3 enemy tanks
         
         //Textbox for name
 #pragma region textbox
@@ -308,18 +306,9 @@ int main()
                             sound6.play(); //Extra tank sound
                             immortal.restart();
                         }
-                        //sf::Time elapsed_score;
+                        
                         if (vie == 0)
                         {
-                            //elapsed_score = score.getElapsedTime(); //Time for classement
-                            //classement(name, elapsed_score.asSeconds(), tab_name, tab_score);
-                            //for (int o = 0; o < tab_name.size() - 1; o++)
-                            //{
-                            //    for (int p = 0; p < tab_name.size() - o - 1; p++)
-                            //    {
-                            //        std::cout << tab_name[p] << "   " << tab_score[p] << std::endl;
-                            //    }
-                            //}
                             a = 2;
                             sound2.play(); //Play the sound when you win
                             d = 2;
